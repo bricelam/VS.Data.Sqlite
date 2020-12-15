@@ -1,0 +1,31 @@
+﻿[$RootKey$\DataSources]
+[$RootKey$\DataSources\{27402929-CA43-48F6-B7DA-605E5D334774}]
+@="SQLite"
+"DefaultProvider"="{796A79E8-2579-4375-9E12-03A9E0D1FC02}"
+[$RootKey$\DataSources\{27402929-CA43-48F6-B7DA-605E5D334774}\SupportingProviders]
+[$RootKey$\DataSources\{27402929-CA43-48F6-B7DA-605E5D334774}\SupportingProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}]
+"Description"="DataSource_Description, Microsoft.VisualStudio.Data.Sqlite.Properties.Resources"
+"DisplayName"="DataSource_DisplayName, Microsoft.VisualStudio.Data.Sqlite.Properties.Resources"
+
+[$RootKey$\DataProviders]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}]
+@="Microsoft.Data.Sqlite Provider"
+"AssociatedSource"="{27402929-CA43-48F6-B7DA-605E5D334774}"
+"Description"="DataProvider_Description, Microsoft.VisualStudio.Data.Sqlite.Properties.Resources"
+"DisplayName"="DataProvider_DisplayName, Microsoft.VisualStudio.Data.Sqlite.Properties.Resources"
+"FactoryService"="{F4B49744-36C6-4F57-A196-E825094D31DD}"
+"InvariantName"="Microsoft.Data.Sqlite"
+"PlatformVersion"="2.0"
+"ShortDisplayName"="DataProvider_ShortDisplayName, Microsoft.VisualStudio.Data.Sqlite.Properties.Resources"
+"Technology"="{77AB9A9D-78B9-4BA7-91AC-873F5338F1D2}"
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataConnectionPromptDialog]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataConnectionProperties]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataConnectionSupport]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataConnectionUIControl]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataObjectIdentifierConverter]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataObjectIdentifierResolver]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataObjectMemberComparer]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataObjectSupport]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataSourceInformation]
+[$RootKey$\DataProviders\{796A79E8-2579-4375-9E12-03A9E0D1FC02}\SupportedObjects\IVsDataViewSupport]
