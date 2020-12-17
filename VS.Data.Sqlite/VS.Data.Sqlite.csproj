@@ -45,14 +45,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DbProviderFactoriesEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SqliteObjectFactory.cs" />
-    <Compile Include="SqlitePackage.cs" />
+    <Compile Include="SqliteConnectionSupport.cs" />
+    <Compile Include="SqliteProviderObjectFactory.cs" />
+    <Compile Include="SqliteDataPackage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
@@ -61,19 +63,31 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite.Core">
+      <Version>5.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Data.Framework">
       <Version>16.7.30328.74</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.206" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.9.1028" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.9.1035">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3">
+      <Version>2.0.4</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DDEX.pkgdef">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <EmbeddedResource Include="SqliteObjectSupport.xml" />
+    <EmbeddedResource Include="SqliteViewSupport.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

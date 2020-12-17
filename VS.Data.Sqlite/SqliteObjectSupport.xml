@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataObjectSupport xmlns="http://schemas.microsoft.com/VisualStudio/2007/07/Data/DataObjectSupport">
+  <Types>
+    <RootType>
+      <Properties>
+        <Property name="DataSource" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Framework.AdoDotNet.AdoDotNetRootObjectSelector">
+          <Parameters method="SelectObjects">
+            <Parameter />
+          </Parameters>
+        </Service>
+      </Services>
+    </RootType>
+  </Types>
+</DataObjectSupport>

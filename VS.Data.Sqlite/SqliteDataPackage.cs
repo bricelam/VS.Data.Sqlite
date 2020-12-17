@@ -25,11 +25,11 @@ namespace Microsoft.VisualStudio.Data.Sqlite
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(PackageGuidString)]
-    [ProvideService(typeof(SSqliteObjectFactory), IsAsyncQueryable = true)]
-    public sealed class SqlitePackage : AsyncPackage
+    [ProvideService(typeof(SSqliteProviderObjectFactory), IsAsyncQueryable = true)]
+    public sealed class SqliteDataPackage : AsyncPackage
     {
         /// <summary>
-        /// SqlitePackage GUID string.
+        /// SqliteDataPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "0feac8da-2a45-4623-8179-2e5b82928098";
 
@@ -45,8 +45,8 @@ namespace Microsoft.VisualStudio.Data.Sqlite
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             AddService(
-                typeof(SSqliteObjectFactory),
-                (_, __, ___) => Task.FromResult<object>(new SqliteObjectFactory()),
+                typeof(SSqliteProviderObjectFactory),
+                (_, __, ___) => Task.FromResult<object>(new SqliteProviderObjectFactory()),
                 promote: true);
 
             // When initialized asynchronously, the current thread may be a background thread at this point.
