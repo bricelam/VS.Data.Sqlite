@@ -103,6 +103,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                 dataTable.Load(reader);
             }
 
+            // TODO: Get collSeq and autoinc via sqlite3_table_column_metadata
             return dataTable;
         }
 

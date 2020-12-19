@@ -31,6 +31,7 @@
                         </Properties>
                       </SelectionNode>
                     </Selection>
+                    <!-- TODO: Indexes, Triggers, and Foreign Keys -->
                   </Children>
                 </SelectionNode>
               </Selection>
