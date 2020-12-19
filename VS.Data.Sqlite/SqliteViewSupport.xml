@@ -5,31 +5,68 @@
       <ConnectionNode>
         <InitialDisplayName>{Root.DataSource}</InitialDisplayName>
         <Children>
-          <Selection type="Table">
-            <SelectionNode nodeId="Table">
-              <Properties>
-                <Property name="Type" />
-                <Property name="Name" />
-                <Property name="RootPage" />
-                <Property name="Sql" />
-              </Properties>
-              <Children>
-                <Selection type="TableColumn" restrictions="{Table.Name}">
-                  <SelectionNode nodeId="Column">
-                    <Properties>
-                      <Property name="Table" />
-                      <Property name="Ordinal" />
-                      <Property name="Name" />
-                      <Property name="Type" />
-                      <Property name="NotNull" />
-                      <Property name="DefaultValue" />
-                      <Property name="PK" />
-                    </Properties>
-                  </SelectionNode>
-                </Selection>
-              </Children>
-            </SelectionNode>
-          </Selection>
+          <StaticNode>
+            <DisplayName resource="Tables" />
+            <Children>
+              <Selection type="Table">
+                <SelectionNode nodeId="table">
+                  <Icon name="Table" />
+                  <Properties>
+                    <Property name="Name" />
+                    <Property name="RootPage" />
+                    <Property name="Sql" />
+                  </Properties>
+                  <Children>
+                    <Selection type="TableColumn" restrictions="{table.Name}">
+                      <SelectionNode>
+                        <Icon name="Column" />
+                        <Properties>
+                          <Property name="Table" />
+                          <Property name="Ordinal" />
+                          <Property name="Name" />
+                          <Property name="Type" />
+                          <Property name="NotNull" />
+                          <Property name="DefaultValue" />
+                          <Property name="PK" />
+                        </Properties>
+                      </SelectionNode>
+                    </Selection>
+                  </Children>
+                </SelectionNode>
+              </Selection>
+            </Children>
+          </StaticNode>
+          <StaticNode>
+            <DisplayName resource="Views" />
+            <Children>
+              <Selection type="View">
+                <SelectionNode nodeId="view">
+                  <Icon name="View" />
+                  <Properties>
+                    <Property name="Name" />
+                    <Property name="RootPage" />
+                    <Property name="Sql" />
+                  </Properties>
+                  <Children>
+                    <Selection type="ViewColumn" restrictions="{view.Name}">
+                      <SelectionNode>
+                        <Icon name="Column" />
+                        <Properties>
+                          <Property name="View" />
+                          <Property name="Ordinal" />
+                          <Property name="Name" />
+                          <Property name="Type" />
+                          <Property name="NotNull" />
+                          <Property name="DefaultValue" />
+                          <Property name="PK" />
+                        </Properties>
+                      </SelectionNode>
+                    </Selection>
+                  </Children>
+                </SelectionNode>
+              </Selection>
+            </Children>
+          </StaticNode>
         </Children>
       </ConnectionNode>
     </View>

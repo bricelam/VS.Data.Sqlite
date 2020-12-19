@@ -18,7 +18,6 @@
         <Part name="Name" />
       </Identifier>
       <Properties>
-        <Property name="Type" />
         <Property name="Name" isIdentifierPart="true" />
         <Property name="RootPage" type="System.Int64" />
         <Property name="Sql" />
@@ -26,7 +25,7 @@
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
           <Parameters method="SelectObjects">
-            <Parameter value="select * from sqlite_master where type IN ('table', 'view') and name not like 'sqlite_%'" />
+            <Parameter value="Tables" />
           </Parameters>
         </Service>
       </Services>
@@ -51,10 +50,63 @@
             <Parameter value="Table" />
           </Parameters>
           <Parameters method="SelectObjects">
-            <Parameter value="select $Table &quot;table&quot;, * from pragma_table_info($Table)" />
+            <Parameter value="Columns" />
             <Parameter>
               <Parameter value="Ordinal">
                 <Parameter value="cid" />
+              </Parameter>
+              <Parameter value="DefaultValue">
+                <Parameter value="dflt_value" />
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
+    <Type name="View">
+      <Identifier>
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="RootPage" type="System.Int64" />
+        <Property name="Sql" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="SelectObjects">
+            <Parameter value="Views" />
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
+    <Type name="ViewColumn">
+      <Identifier>
+        <Part name="View" />
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="View" isIdentifierPart="true" />
+        <Property name="Ordinal" type="System.Int64" />
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="Type" />
+        <Property name="NotNull" type="System.Int64" />
+        <Property name="DefaultValue" type="System.Object" />
+        <Property name="PK" type="System.Int64" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="GetRequiredRestrictions">
+            <Parameter value="View" />
+          </Parameters>
+          <Parameters method="SelectObjects">
+            <Parameter value="Columns" />
+            <Parameter>
+              <Parameter value="Ordinal">
+                <Parameter value="cid" />
+              </Parameter>
+              <Parameter value="View">
+                <Parameter value="table" />
               </Parameter>
               <Parameter value="DefaultValue">
                 <Parameter value="dflt_value" />

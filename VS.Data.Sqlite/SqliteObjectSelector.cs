@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
+using System.Linq;
+using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Framework.AdoDotNet;
 using Microsoft.VisualStudio.Data.Services;
 using Microsoft.VisualStudio.Data.Services.SupportEntities;
@@ -11,7 +12,13 @@ namespace Microsoft.VisualStudio.Data.Sqlite
 {
     class SqliteObjectSelector : AdoDotNetObjectSelector
     {
-        readonly Dictionary<string, IList<string>> _supportedRestrictions = new Dictionary<string, IList<string>>();
+        readonly Dictionary<string, Func<SqliteConnection, string[], DataTable>> _objectSelectors
+            = new Dictionary<string, Func<SqliteConnection, string[], DataTable>>
+            {
+                { "Tables",  SelectTables },
+                { "Columns", SelectColumns },
+                { "Views", SelectViews }
+            };
 
         public SqliteObjectSelector()
         {
@@ -22,51 +29,32 @@ namespace Microsoft.VisualStudio.Data.Sqlite
         {
         }
 
-        protected override IList<string> GetSupportedRestrictions(string typeName, object[] parameters)
-            => _supportedRestrictions[typeName] = base.GetSupportedRestrictions(typeName, parameters);
-
-        protected override IVsDataReader SelectObjects(string typeName, object[] restrictions, string[] properties, object[] parameters)
+        protected override IVsDataReader SelectObjects(
+            string typeName,
+            object[] restrictions,
+            string[] properties,
+            object[] parameters)
         {
-            if (parameters == null
-                || parameters.Length == 0 || parameters.Length > 2
-                || !(parameters[0] is string commandText))
-            {
-                throw new ArgumentException("The restrictions array passed to this object selector is invalid; it must be either null or an empty array.");
-            }
-
             IVsDataReader dataReader;
 
-            var connection = (DbConnection)Site.GetLockedProviderObject();
+            var connection = (SqliteConnection)Site.GetLockedProviderObject();
             try
             {
                 Site.EnsureConnected();
 
-                var dataTable = new DataTable();
-
-                var command = connection.CreateCommand();
-                command.CommandText = commandText;
-
-                if (restrictions != null)
+                if (!_objectSelectors.TryGetValue((string)parameters[0], out var selectObjects))
                 {
-                    for (var i = 0; i < restrictions.Length; i++)
-                    {
-                        var parameter = command.CreateParameter();
-                        parameter.ParameterName = _supportedRestrictions[typeName][i];
-                        parameter.Value = restrictions[i];
-                        command.Parameters.Add(parameter);
-                    }
+                    // TODO: Message
+                    throw new NotSupportedException();
                 }
 
-                using (var reader = command.ExecuteReader())
-                {
-                    dataTable.Load(reader);
-                }
+                var dataTable = selectObjects(
+                    connection,
+                    restrictions?.Cast<string>().ToArray() ?? Array.Empty<string>());
 
-                if (parameters.Length == 2
-                    && parameters[1] is DictionaryEntry mappingsEntry
-                    && mappingsEntry.Value is object[] mappings)
+                if (parameters.Length == 2)
                 {
-                    ApplyMappings(dataTable, GetMappings(mappings));
+                    ApplyMappings(dataTable, GetMappings((object[])((DictionaryEntry)parameters[1]).Value));
                 }
 
                 dataReader = new AdoDotNetTableReader(dataTable);
@@ -77,6 +65,65 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             }
 
             return dataReader;
+        }
+
+        static DataTable SelectTables(SqliteConnection connection, string[] restrictions)
+        {
+            var command = connection.CreateCommand();
+            command.CommandText =
+            @"
+                SELECT *
+                FROM sqlite_master
+                WHERE type = 'table'
+                    AND name NOT LIKE 'sqlite_%'
+            ";
+
+            var dataTable = new DataTable();
+            using (var reader = command.ExecuteReader())
+            {
+                dataTable.Load(reader);
+            }
+
+            return dataTable;
+        }
+
+        static DataTable SelectColumns(SqliteConnection connection, string[] restrictions)
+        {
+            var command = connection.CreateCommand();
+            command.CommandText =
+            @"
+                SELECT $table AS ""table"", *
+                FROM pragma_table_info($table)
+            ";
+            command.Parameters.AddWithValue("$table", restrictions[0]);
+
+            var dataTable = new DataTable();
+            using (var reader = command.ExecuteReader())
+            {
+                dataTable.Load(reader);
+            }
+
+            return dataTable;
+        }
+
+        static DataTable SelectViews(SqliteConnection connection, string[] restrictions)
+        {
+            var command = connection.CreateCommand();
+            command.CommandText =
+            @"
+                SELECT *
+                FROM sqlite_master
+                WHERE type = 'view'
+                    AND name NOT LIKE 'sqlite_%'
+            ";
+
+            var dataTable = new DataTable();
+            using (var reader = command.ExecuteReader())
+            {
+                dataTable.Load(reader);
+            }
+
+            return dataTable;
         }
     }
 }
