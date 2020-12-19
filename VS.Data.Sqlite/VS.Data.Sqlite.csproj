@@ -53,6 +53,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SqliteConnectionSupport.cs" />
+    <Compile Include="SqliteObjectSelector.cs" />
     <Compile Include="SqliteProviderObjectFactory.cs" />
     <Compile Include="SqliteDataPackage.cs" />
   </ItemGroup>

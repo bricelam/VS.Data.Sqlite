@@ -13,5 +13,56 @@
         </Service>
       </Services>
     </RootType>
+    <Type name="Table">
+      <Identifier>
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Type" />
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="RootPage" type="System.Int64" />
+        <Property name="Sql" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="SelectObjects">
+            <Parameter value="select * from sqlite_master where type IN ('table', 'view') and name not like 'sqlite_%'" />
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
+    <Type name="TableColumn">
+      <Identifier>
+        <Part name="Table" />
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Table" isIdentifierPart="true" />
+        <Property name="Ordinal" type="System.Int64" />
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="Type" />
+        <Property name="NotNull" type="System.Int64" />
+        <Property name="DefaultValue" type="System.Object" />
+        <Property name="PK" type="System.Int64" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="GetRequiredRestrictions">
+            <Parameter value="Table" />
+          </Parameters>
+          <Parameters method="SelectObjects">
+            <Parameter value="select $Table &quot;table&quot;, * from pragma_table_info($Table)" />
+            <Parameter>
+              <Parameter value="Ordinal">
+                <Parameter value="cid" />
+              </Parameter>
+              <Parameter value="DefaultValue">
+                <Parameter value="dflt_value" />
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
   </Types>
 </DataObjectSupport>
