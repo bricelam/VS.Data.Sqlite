@@ -31,7 +31,23 @@
                         </Properties>
                       </SelectionNode>
                     </Selection>
-                    <!-- TODO: Indexes, Triggers, and Foreign Keys -->
+                    <StaticNode>
+                      <DisplayName resource="Triggers" />
+                      <Children>
+                        <Selection type="TableTrigger" restrictions="{table.Name}">
+                          <SelectionNode>
+                            <Icon name="Trigger" />
+                            <Properties>
+                              <Property name="Name" />
+                              <Property name="Table" />
+                              <Property name="RootPage" />
+                              <Property name="Sql" />
+                            </Properties>
+                          </SelectionNode>
+                        </Selection>
+                      </Children>
+                    </StaticNode>
+                    <!-- TODO: Indexes and Foreign Keys -->
                   </Children>
                 </SelectionNode>
               </Selection>
@@ -59,10 +75,25 @@
                           <Property name="Type" />
                           <Property name="NotNull" />
                           <Property name="DefaultValue" />
-                          <Property name="PK" />
                         </Properties>
                       </SelectionNode>
                     </Selection>
+                    <StaticNode>
+                      <DisplayName resource="Triggers" />
+                      <Children>
+                        <Selection type="ViewTrigger" restrictions="{view.Name}">
+                          <SelectionNode>
+                            <Icon name="Trigger" />
+                            <Properties>
+                              <Property name="Name" />
+                              <Property name="View" />
+                              <Property name="RootPage" />
+                              <Property name="Sql" />
+                            </Properties>
+                          </SelectionNode>
+                        </Selection>
+                      </Children>
+                    </StaticNode>
                   </Children>
                 </SelectionNode>
               </Selection>

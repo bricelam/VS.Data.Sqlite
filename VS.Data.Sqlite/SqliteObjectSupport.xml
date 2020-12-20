@@ -92,7 +92,6 @@
         <Property name="Type" />
         <Property name="NotNull" type="System.Int64" />
         <Property name="DefaultValue" type="System.Object" />
-        <Property name="PK" type="System.Int64" />
       </Properties>
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
@@ -110,6 +109,58 @@
               </Parameter>
               <Parameter value="DefaultValue">
                 <Parameter value="dflt_value" />
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
+    <Type name="TableTrigger">
+      <Identifier>
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="Table" />
+        <Property name="RootPage" type="System.Int64" />
+        <Property name="Sql" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="GetSupportedRestrictions">
+            <Parameter value="Table" />
+          </Parameters>
+          <Parameters method="SelectObjects">
+            <Parameter value="Triggers" />
+            <Parameter>
+              <Parameter value="Table">
+                <Parameter value="tbl_name" />
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
+    <Type name="ViewTrigger">
+      <Identifier>
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="View" />
+        <Property name="RootPage" type="System.Int64" />
+        <Property name="Sql" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="GetSupportedRestrictions">
+            <Parameter value="View" />
+          </Parameters>
+          <Parameters method="SelectObjects">
+            <Parameter value="Triggers" />
+            <Parameter>
+              <Parameter value="View">
+                <Parameter value="tbl_name" />
               </Parameter>
             </Parameter>
           </Parameters>

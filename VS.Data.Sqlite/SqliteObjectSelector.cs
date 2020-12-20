@@ -17,7 +17,8 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             {
                 { "Tables",  SelectTables },
                 { "Columns", SelectColumns },
-                { "Views", SelectViews }
+                { "Views", SelectViews },
+                { "Triggers", SelectTriggers }
             };
 
         public SqliteObjectSelector()
@@ -117,6 +118,29 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                 WHERE type = 'view'
                     AND name NOT LIKE 'sqlite_%'
             ";
+
+            var dataTable = new DataTable();
+            using (var reader = command.ExecuteReader())
+            {
+                dataTable.Load(reader);
+            }
+
+            return dataTable;
+        }
+
+        static DataTable SelectTriggers(SqliteConnection connection, string[] restrictions)
+        {
+            var table = restrictions.Length < 1 ? DBNull.Value : (object)restrictions[0];
+
+            var command = connection.CreateCommand();
+            command.CommandText =
+            @"
+                SELECT *
+                FROM sqlite_master
+                WHERE type = 'trigger'
+                    AND ($table IS NULL OR tbl_name = $table)
+            ";
+            command.Parameters.AddWithValue("$table", table);
 
             var dataTable = new DataTable();
             using (var reader = command.ExecuteReader())
