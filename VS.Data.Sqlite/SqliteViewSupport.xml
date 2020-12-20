@@ -4,6 +4,9 @@
     <View name="SQLite">
       <ConnectionNode>
         <InitialDisplayName>{Root.DataSource}</InitialDisplayName>
+        <Commands>
+          <Command guid="f851f287-fa5b-491f-922d-12bcc4a13af3" cmdid="0x0100" provider="Microsoft.VisualStudio.Data.Sqlite.SqliteViewCommandProvider" />
+        </Commands>
         <Children>
           <StaticNode>
             <DisplayName resource="Tables" />
