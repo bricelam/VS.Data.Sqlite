@@ -24,15 +24,11 @@ namespace Microsoft.VisualStudio.Data.Sqlite
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [Guid(PackageGuidString)]
+    [Guid(PackageGuids.guidSqliteDataPackageString)]
     [ProvideService(typeof(SSqliteProviderObjectFactory), IsAsyncQueryable = true)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
     public sealed class SqliteDataPackage : AsyncPackage
     {
-        /// <summary>
-        /// SqliteDataPackage GUID string.
-        /// </summary>
-        public const string PackageGuidString = "0feac8da-2a45-4623-8179-2e5b82928098";
-
         #region Package Members
 
         /// <summary>
