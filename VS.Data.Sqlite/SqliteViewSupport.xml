@@ -13,8 +13,6 @@
                   <Icon name="Table" />
                   <Properties>
                     <Property name="Name" />
-                    <Property name="RootPage" />
-                    <Property name="Sql" />
                   </Properties>
                   <Children>
                     <Selection type="TableColumn" restrictions="{table.Name}">
@@ -27,7 +25,7 @@
                           <Property name="Type" />
                           <Property name="NotNull" />
                           <Property name="DefaultValue" />
-                          <Property name="PK" />
+                          <Property name="Hidden" />
                         </Properties>
                       </SelectionNode>
                     </Selection>
@@ -38,10 +36,8 @@
                           <SelectionNode>
                             <Icon name="Trigger" />
                             <Properties>
-                              <Property name="Name" />
                               <Property name="Table" />
-                              <Property name="RootPage" />
-                              <Property name="Sql" />
+                              <Property name="Name" />
                             </Properties>
                           </SelectionNode>
                         </Selection>
@@ -61,8 +57,6 @@
                   <Icon name="View" />
                   <Properties>
                     <Property name="Name" />
-                    <Property name="RootPage" />
-                    <Property name="Sql" />
                   </Properties>
                   <Children>
                     <Selection type="ViewColumn" restrictions="{view.Name}">
@@ -73,8 +67,6 @@
                           <Property name="Ordinal" />
                           <Property name="Name" />
                           <Property name="Type" />
-                          <Property name="NotNull" />
-                          <Property name="DefaultValue" />
                         </Properties>
                       </SelectionNode>
                     </Selection>
@@ -85,10 +77,8 @@
                           <SelectionNode>
                             <Icon name="Trigger" />
                             <Properties>
-                              <Property name="Name" />
                               <Property name="View" />
-                              <Property name="RootPage" />
-                              <Property name="Sql" />
+                              <Property name="Name" />
                             </Properties>
                           </SelectionNode>
                         </Selection>

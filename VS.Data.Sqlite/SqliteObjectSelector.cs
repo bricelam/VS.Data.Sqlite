@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Framework.AdoDotNet;
 using Microsoft.VisualStudio.Data.Services;
@@ -12,13 +11,15 @@ namespace Microsoft.VisualStudio.Data.Sqlite
 {
     class SqliteObjectSelector : AdoDotNetObjectSelector
     {
-        readonly Dictionary<string, Func<SqliteConnection, string[], DataTable>> _objectSelectors
-            = new Dictionary<string, Func<SqliteConnection, string[], DataTable>>
+        readonly Dictionary<string, Func<SqliteConnection, object[], DataTable>> _objectSelectors
+            = new Dictionary<string, Func<SqliteConnection, object[], DataTable>>
             {
                 { "Tables",  SelectTables },
-                { "Columns", SelectColumns },
+                { "TableColumns", SelectTableColumns },
+                { "TableTriggers", SelectTableTriggers },
                 { "Views", SelectViews },
-                { "Triggers", SelectTriggers }
+                { "ViewColumns", SelectViewColumns },
+                { "ViewTriggers", SelectViewTriggers }
             };
 
         public SqliteObjectSelector()
@@ -43,15 +44,16 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             {
                 Site.EnsureConnected();
 
-                if (!_objectSelectors.TryGetValue((string)parameters[0], out var selectObjects))
+                var collectionName = (string)parameters[0];
+                if (!_objectSelectors.TryGetValue(collectionName, out var selectObjects))
                 {
-                    // TODO: Message
-                    throw new NotSupportedException();
+                    // TODO: Resourcify
+                    throw new ArgumentException($"The requested collection ({collectionName}) is not defined.");
                 }
 
                 var dataTable = selectObjects(
                     connection,
-                    restrictions?.Cast<string>().ToArray() ?? Array.Empty<string>());
+                    restrictions ?? Array.Empty<object>());
 
                 if (parameters.Length == 2)
                 {
@@ -68,16 +70,17 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             return dataReader;
         }
 
-        static DataTable SelectTables(SqliteConnection connection, string[] restrictions)
+        static DataTable SelectTables(SqliteConnection connection, object[] restrictions)
         {
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT *
+                SELECT name
                 FROM sqlite_master
                 WHERE type = 'table'
-                    AND name NOT LIKE 'sqlite_%'
+                    AND ($name IS NULL OR name = $name)
             ";
+            command.Parameters.AddWithValue("$name", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
 
             var dataTable = new DataTable();
             using (var reader = command.ExecuteReader())
@@ -88,19 +91,25 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             return dataTable;
         }
 
-        static DataTable SelectColumns(SqliteConnection connection, string[] restrictions)
+        static DataTable SelectTableColumns(SqliteConnection connection, object[] restrictions)
         {
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT $table AS ""table"", *
-                FROM pragma_table_info($table)
+                SELECT t.name AS ""table"", cid, c.name, c.type, ""notnull"", dflt_value, hidden
+                FROM sqlite_master AS t
+                JOIN pragma_table_xinfo(t.name) AS c
+                WHERE t.type = 'table'
+                    AND ($table IS NULL OR t.name = $table)
+                    AND ($name IS NULL OR c.name = $name)
             ";
-            command.Parameters.AddWithValue("$table", restrictions[0]);
+            command.Parameters.AddWithValue("$table", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+            command.Parameters.AddWithValue("$name", (restrictions.Length <= 1 ? null : restrictions[1]) ?? DBNull.Value);
 
             var dataTable = new DataTable();
             using (var reader = command.ExecuteReader())
             {
+                // TODO: Handle variant column dflt_value
                 dataTable.Load(reader);
             }
 
@@ -108,16 +117,21 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             return dataTable;
         }
 
-        static DataTable SelectViews(SqliteConnection connection, string[] restrictions)
+        static DataTable SelectTableTriggers(SqliteConnection connection, object[] restrictions)
         {
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT *
-                FROM sqlite_master
-                WHERE type = 'view'
-                    AND name NOT LIKE 'sqlite_%'
+                SELECT t.name AS ""table"", r.name
+                FROM sqlite_master AS t
+                JOIN sqlite_master AS r ON r.tbl_name = t.name
+                WHERE t.type = 'table'
+                    AND r.type == 'trigger'
+                    AND ($table IS NULL OR t.name = $table)
+                    AND ($name IS NULL OR r.name = $name)
             ";
+            command.Parameters.AddWithValue("$table", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+            command.Parameters.AddWithValue("$name", (restrictions.Length <= 1 ? null : restrictions[1]) ?? DBNull.Value);
 
             var dataTable = new DataTable();
             using (var reader = command.ExecuteReader())
@@ -128,19 +142,66 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             return dataTable;
         }
 
-        static DataTable SelectTriggers(SqliteConnection connection, string[] restrictions)
+        static DataTable SelectViews(SqliteConnection connection, object[] restrictions)
         {
-            var table = restrictions.Length < 1 ? DBNull.Value : (object)restrictions[0];
-
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT *
+                SELECT name
                 FROM sqlite_master
-                WHERE type = 'trigger'
-                    AND ($table IS NULL OR tbl_name = $table)
+                WHERE type = 'view'
+                    AND ($name IS NULL OR name = $name)
             ";
-            command.Parameters.AddWithValue("$table", table);
+            command.Parameters.AddWithValue("$name", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+
+            var dataTable = new DataTable();
+            using (var reader = command.ExecuteReader())
+            {
+                dataTable.Load(reader);
+            }
+
+            return dataTable;
+        }
+
+        static DataTable SelectViewColumns(SqliteConnection connection, object[] restrictions)
+        {
+            var command = connection.CreateCommand();
+            command.CommandText =
+            @"
+                SELECT v.name AS ""view"", cid, c.name, c.type
+                FROM sqlite_master AS v
+                JOIN pragma_table_xinfo(v.name) AS c
+                WHERE v.type = 'view'
+                    AND ($view IS NULL OR v.name = $view)
+                    AND ($name IS NULL OR c.name = $name)
+            ";
+            command.Parameters.AddWithValue("$view", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+            command.Parameters.AddWithValue("$name", (restrictions.Length <= 1 ? null : restrictions[1]) ?? DBNull.Value);
+
+            var dataTable = new DataTable();
+            using (var reader = command.ExecuteReader())
+            {
+                dataTable.Load(reader);
+            }
+
+            return dataTable;
+        }
+
+        static DataTable SelectViewTriggers(SqliteConnection connection, object[] restrictions)
+        {
+            var command = connection.CreateCommand();
+            command.CommandText =
+            @"
+                SELECT v.name AS ""view"", r.name
+                FROM sqlite_master AS v
+                JOIN sqlite_master AS r ON r.tbl_name = v.name
+                WHERE v.type = 'view'
+                    AND r.type == 'trigger'
+                    AND ($view IS NULL OR v.name = $view)
+                    AND ($name IS NULL OR r.name = $name)
+            ";
+            command.Parameters.AddWithValue("$view", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+            command.Parameters.AddWithValue("$name", (restrictions.Length <= 1 ? null : restrictions[1]) ?? DBNull.Value);
 
             var dataTable = new DataTable();
             using (var reader = command.ExecuteReader())
