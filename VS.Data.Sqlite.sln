@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VS.Data.Sqlite", "VS.Data.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Data.Sqlite.Core", "efcore\src\Microsoft.Data.Sqlite.Core\Microsoft.Data.Sqlite.Core.csproj", "{775A9A2B-2EDB-4E2E-8E74-E46E8E8E1236}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VS.Data.Sqlite.IntegrationTests", "VS.Data.Sqlite.IntegrationTests\VS.Data.Sqlite.IntegrationTests.csproj", "{44561772-A0B0-491C-B1AB-7FD755AA5707}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{775A9A2B-2EDB-4E2E-8E74-E46E8E8E1236}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{775A9A2B-2EDB-4E2E-8E74-E46E8E8E1236}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{775A9A2B-2EDB-4E2E-8E74-E46E8E8E1236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44561772-A0B0-491C-B1AB-7FD755AA5707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44561772-A0B0-491C-B1AB-7FD755AA5707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44561772-A0B0-491C-B1AB-7FD755AA5707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44561772-A0B0-491C-B1AB-7FD755AA5707}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
