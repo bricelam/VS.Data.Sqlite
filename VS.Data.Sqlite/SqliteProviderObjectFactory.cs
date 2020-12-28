@@ -3,7 +3,6 @@ using System.Data.Common;
 using System.Runtime.InteropServices;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Framework;
-using Microsoft.VisualStudio.Data.Framework.AdoDotNet;
 using Microsoft.VisualStudio.Data.Services.SupportEntities;
 
 namespace Microsoft.VisualStudio.Data.Sqlite
@@ -38,7 +37,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             if (objType == typeof(IVsDataConnectionProperties)
                 || objType == typeof(IVsDataConnectionUIProperties))
             {
-                return new AdoDotNetConnectionProperties();
+                return new SqliteConnectionProperties();
             }
             if (objType == typeof(IVsDataViewSupport))
             {
