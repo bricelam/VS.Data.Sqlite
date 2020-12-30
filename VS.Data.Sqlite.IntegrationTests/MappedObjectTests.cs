@@ -19,8 +19,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
 
             var command = (IVsDataCommand)connection.GetService(typeof(IVsDataCommand));
             command.ExecuteWithoutResults(@"
-                CREATE TABLE A (X);
-                CREATE TABLE B (X);
+                CREATE TABLE table1 (id INTEGER PRIMARY KEY AUTOINCREMENT);
             ");
 
             var selector = (IVsDataMappedObjectSelector)connection.GetService(typeof(IVsDataMappedObjectSelector));
@@ -28,8 +27,15 @@ namespace Microsoft.VisualStudio.Data.Sqlite
 
             Assert.Collection(
                 tables,
-                t => Assert.Equal("A", t.Name),
-                t => Assert.Equal("B", t.Name));
+                t =>
+                {
+                    Assert.Equal("main", t.Catalog);
+                    Assert.Null(t.Schema);
+                    Assert.Equal("sqlite_sequence", t.Name);
+                    Assert.True(t.IsSystemObject);
+                    Assert.Equal(new object[] { "main", null, "sqlite_sequence" }, t.Identifier);
+                },
+                t => Assert.Equal("table1", t.Name));
         }
 
         [VsFact]

@@ -135,6 +135,23 @@
   <MappedTypes>
     <MappedType name="Table" underlyingType="Table">
       <Selection restrictions="{Name}" />
+      <Identifier>
+        <Part name="Catalog">
+          <Conversion>
+            <Calculate expr="'main'" exprType="System.String" />
+          </Conversion>
+        </Part>
+        <Part name="Name" underlyingMember="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Catalog" isIdentifierPart="true" />
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="IsSystemObject" underlyingMember="Name">
+          <Conversion>
+            <Calculate expr="{0} LIKE 'sqlite_%'" exprType="System.Boolean" />
+          </Conversion>
+        </Property>
+      </Properties>
     </MappedType>
   </MappedTypes>
 </DataObjectSupport>
