@@ -34,6 +34,10 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             {
                 return new SqliteConnectionSupport();
             }
+            if (objType == typeof(IVsDataConnectionUIControl))
+            {
+                return new SqliteConnectionUIControl();
+            }
             if (objType == typeof(IVsDataConnectionProperties)
                 || objType == typeof(IVsDataConnectionUIProperties))
             {

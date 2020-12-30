@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Extensions\DbProviderFactoriesEx.cs" />
+    <Compile Include="PackageGuids.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\InternalsVisibleTo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -55,6 +56,12 @@
     </Compile>
     <Compile Include="SqliteConnectionProperties.cs" />
     <Compile Include="SqliteConnectionSupport.cs" />
+    <Compile Include="SqliteConnectionUIControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SqliteConnectionUIControl.Designer.cs">
+      <DependentUpon>SqliteConnectionUIControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="SqliteObjectSelector.cs" />
     <Compile Include="SqliteProviderObjectFactory.cs" />
     <Compile Include="SqliteDataPackage.cs" />
@@ -67,6 +74,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Data.Framework">
@@ -86,6 +96,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <EmbeddedResource Include="SqliteConnectionUIControl.resx">
+      <DependentUpon>SqliteConnectionUIControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SqliteObjectSupport.xml" />
     <EmbeddedResource Include="SqliteViewSupport.xml" />
   </ItemGroup>

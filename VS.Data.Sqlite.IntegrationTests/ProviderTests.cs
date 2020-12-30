@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Data.Sqlite.Properties;
 using Microsoft.VisualStudio.Shell;
 using Xunit;
 
-namespace VisualStudio.Data.Sqlite
+namespace Microsoft.VisualStudio.Data.Sqlite
 {
     public class ProviderTests
     {
@@ -13,7 +13,7 @@ namespace VisualStudio.Data.Sqlite
         {
             var providerManager = (IVsDataProviderManager)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataProviderManager));
 
-            var provider = Assert.Contains(new Guid("796A79E8-2579-4375-9E12-03A9E0D1FC02"), providerManager.Providers);
+            var provider = Assert.Contains(PackageGuids.guidSqliteDataProvider, providerManager.Providers);
 
             Assert.Equal("Microsoft.Data.Sqlite Provider", provider.Name);
             Assert.Equal(Resources.DataProvider_Description, provider.Description);
