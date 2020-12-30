@@ -132,4 +132,9 @@
       </Services>
     </Type>
   </Types>
+  <MappedTypes>
+    <MappedType name="Table" underlyingType="Table">
+      <Selection restrictions="{Name}" />
+    </MappedType>
+  </MappedTypes>
 </DataObjectSupport>
