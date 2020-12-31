@@ -19,6 +19,7 @@
       </Identifier>
       <Properties>
         <Property name="Name" isIdentifierPart="true" />
+        <Property name="Sql" />
       </Properties>
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
@@ -40,6 +41,7 @@
         <Property name="Type" />
         <Property name="NotNull" type="System.Int64" />
         <Property name="DefaultValue" type="System.Object" />
+        <Property name="PrimaryKey" type="System.Int64" />
         <Property name="Hidden" type="System.Int64" />
       </Properties>
       <Services>
@@ -49,6 +51,9 @@
             <Parameter>
               <Parameter value="DefaultValue">
                 <Parameter value="dflt_value" />
+              </Parameter>
+              <Parameter value="PrimaryKey">
+                <Parameter value="pk" />
               </Parameter>
             </Parameter>
           </Parameters>
@@ -63,6 +68,7 @@
       <Properties>
         <Property name="Table" isIdentifierPart="true" />
         <Property name="Name" isIdentifierPart="true" />
+        <Property name="Sql" />
       </Properties>
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
@@ -78,6 +84,7 @@
       </Identifier>
       <Properties>
         <Property name="Name" isIdentifierPart="true" />
+        <Property name="Sql" />
       </Properties>
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
@@ -114,6 +121,7 @@
       <Properties>
         <Property name="View" isIdentifierPart="true" />
         <Property name="Name" isIdentifierPart="true" />
+        <Property name="Sql" />
       </Properties>
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">

@@ -75,7 +75,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT name
+                SELECT name, sql
                 FROM sqlite_master
                 WHERE type = 'table'
                     AND ($name IS NULL OR name = $name)
@@ -96,7 +96,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT t.name AS ""table"", cid, c.name, c.type, ""notnull"", dflt_value, hidden
+                SELECT t.name AS ""table"", cid, c.name, c.type, ""notnull"", dflt_value, pk, hidden
                 FROM sqlite_master AS t
                 JOIN pragma_table_xinfo(t.name) AS c
                 WHERE t.type = 'table'
@@ -122,7 +122,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT t.name AS ""table"", r.name
+                SELECT t.name AS ""table"", r.name, r.sql
                 FROM sqlite_master AS t
                 JOIN sqlite_master AS r ON r.tbl_name = t.name
                 WHERE t.type = 'table'
@@ -147,7 +147,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT name
+                SELECT name, sql
                 FROM sqlite_master
                 WHERE type = 'view'
                     AND ($name IS NULL OR name = $name)
@@ -192,7 +192,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             var command = connection.CreateCommand();
             command.CommandText =
             @"
-                SELECT v.name AS ""view"", r.name
+                SELECT v.name AS ""view"", r.name, r.sql
                 FROM sqlite_master AS v
                 JOIN sqlite_master AS r ON r.tbl_name = v.name
                 WHERE v.type = 'view'

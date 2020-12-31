@@ -11,6 +11,7 @@
               <Selection type="Table" ordering="Name">
                 <SelectionNode nodeId="table">
                   <Icon name="Table" />
+                  <!-- TODO: Command to show Sql? -->
                   <Properties>
                     <Property name="Name" />
                   </Properties>
@@ -20,6 +21,9 @@
                       <Children>
                         <Selection type="TableColumn" restrictions="{table.Name}" ordering="CID">
                           <SelectionNode>
+                            <!-- TODO: UniqueKey and ForeignKey? -->
+                            <Icon name="PrimaryKey" when="{PrimaryKey} &lt;> 0" />
+                            <Icon name="ComputedColumn" when="{Hidden} IN (2, 3)" />
                             <Icon name="Column" />
                             <Properties>
                               <Property name="Table" />
@@ -28,6 +32,7 @@
                               <Property name="Type" />
                               <Property name="NotNull" />
                               <Property name="DefaultValue" />
+                              <Property name="PrimaryKey" />
                               <Property name="Hidden" />
                             </Properties>
                           </SelectionNode>
