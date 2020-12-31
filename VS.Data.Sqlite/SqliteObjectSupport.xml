@@ -23,6 +23,28 @@
             <Parameter value="Tables" />
           </Parameters>
         </Service>
+        <Service type="IDSRefBuilder" implementationType="Microsoft.VisualStudio.Data.Framework.DSRefBuilder">
+          <Parameters method="AppendToDSRef">
+            <Parameter>
+              <!-- Name -->
+              <Parameter value="{0}" />
+              <!-- Owner -->
+              <Parameter />
+              <!-- Type -->
+              <Parameter value="TABLE" />
+              <!-- ExtendedType -->
+              <Parameter />
+              <!-- Properties -->
+              <Parameter>
+                <!-- GUID_DSRefProperty_PreciseType -->
+                <Parameter value="39A5A7E7-513F-44a4-B79D-7652CD8962D9">
+                  <!-- Table -->
+                  <Parameter value="101" type="System.Int32" />
+                </Parameter>
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
       </Services>
     </Type>
     <Type name="TableColumn">
@@ -86,6 +108,28 @@
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
           <Parameters method="SelectObjects">
             <Parameter value="Views" />
+          </Parameters>
+        </Service>
+        <Service type="IDSRefBuilder" implementationType="Microsoft.VisualStudio.Data.Framework.DSRefBuilder">
+          <Parameters method="AppendToDSRef">
+            <Parameter>
+              <!-- Name -->
+              <Parameter value="{0}" />
+              <!-- Owner -->
+              <Parameter />
+              <!-- Type -->
+              <Parameter value="VIEW" />
+              <!-- ExtendedType -->
+              <Parameter />
+              <!-- Properties -->
+              <Parameter>
+                <!-- GUID_DSRefProperty_PreciseType -->
+                <Parameter value="39A5A7E7-513F-44a4-B79D-7652CD8962D9">
+                  <!-- View -->
+                  <Parameter value="301" type="System.Int32" />
+                </Parameter>
+              </Parameter>
+            </Parameter>
           </Parameters>
         </Service>
       </Services>
