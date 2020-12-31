@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("VisualStudio.Data.Sqlite")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A Data Designer Extensibility (DDEX) provider for Microsoft.Data.Sqlite")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("VisualStudio.Data.Sqlite")]

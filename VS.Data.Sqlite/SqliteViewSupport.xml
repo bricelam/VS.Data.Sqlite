@@ -8,31 +8,36 @@
           <StaticNode>
             <DisplayName resource="Tables" />
             <Children>
-              <Selection type="Table">
+              <Selection type="Table" ordering="Name">
                 <SelectionNode nodeId="table">
                   <Icon name="Table" />
                   <Properties>
                     <Property name="Name" />
                   </Properties>
                   <Children>
-                    <Selection type="TableColumn" restrictions="{table.Name}">
-                      <SelectionNode>
-                        <Icon name="Column" />
-                        <Properties>
-                          <Property name="Table" />
-                          <Property name="Ordinal" />
-                          <Property name="Name" />
-                          <Property name="Type" />
-                          <Property name="NotNull" />
-                          <Property name="DefaultValue" />
-                          <Property name="Hidden" />
-                        </Properties>
-                      </SelectionNode>
-                    </Selection>
+                    <StaticNode>
+                      <DisplayName resource="Columns" />
+                      <Children>
+                        <Selection type="TableColumn" restrictions="{table.Name}" ordering="CID">
+                          <SelectionNode>
+                            <Icon name="Column" />
+                            <Properties>
+                              <Property name="Table" />
+                              <Property name="CID" />
+                              <Property name="Name" />
+                              <Property name="Type" />
+                              <Property name="NotNull" />
+                              <Property name="DefaultValue" />
+                              <Property name="Hidden" />
+                            </Properties>
+                          </SelectionNode>
+                        </Selection>
+                      </Children>
+                    </StaticNode>
                     <StaticNode>
                       <DisplayName resource="Triggers" />
                       <Children>
-                        <Selection type="TableTrigger" restrictions="{table.Name}">
+                        <Selection type="TableTrigger" restrictions="{table.Name}" ordering="Name">
                           <SelectionNode>
                             <Icon name="Trigger" />
                             <Properties>
@@ -52,19 +57,19 @@
           <StaticNode>
             <DisplayName resource="Views" />
             <Children>
-              <Selection type="View">
+              <Selection type="View" ordering="Name">
                 <SelectionNode nodeId="view">
                   <Icon name="View" />
                   <Properties>
                     <Property name="Name" />
                   </Properties>
                   <Children>
-                    <Selection type="ViewColumn" restrictions="{view.Name}">
+                    <Selection type="ViewColumn" restrictions="{view.Name}" ordering="CID">
                       <SelectionNode>
                         <Icon name="Column" />
                         <Properties>
                           <Property name="View" />
-                          <Property name="Ordinal" />
+                          <Property name="CID" />
                           <Property name="Name" />
                           <Property name="Type" />
                         </Properties>
@@ -73,7 +78,7 @@
                     <StaticNode>
                       <DisplayName resource="Triggers" />
                       <Children>
-                        <Selection type="ViewTrigger" restrictions="{view.Name}">
+                        <Selection type="ViewTrigger" restrictions="{view.Name}" ordering="Name">
                           <SelectionNode>
                             <Icon name="Trigger" />
                             <Properties>

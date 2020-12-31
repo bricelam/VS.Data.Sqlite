@@ -35,7 +35,7 @@
       </Identifier>
       <Properties>
         <Property name="Table" isIdentifierPart="true" />
-        <Property name="Ordinal" type="System.Int64" />
+        <Property name="CID" type="System.Int64" />
         <Property name="Name" isIdentifierPart="true" />
         <Property name="Type" />
         <Property name="NotNull" type="System.Int64" />
@@ -47,9 +47,6 @@
           <Parameters method="SelectObjects">
             <Parameter value="TableColumns" />
             <Parameter>
-              <Parameter value="Ordinal">
-                <Parameter value="cid" />
-              </Parameter>
               <Parameter value="DefaultValue">
                 <Parameter value="dflt_value" />
               </Parameter>
@@ -97,7 +94,7 @@
       </Identifier>
       <Properties>
         <Property name="View" isIdentifierPart="true" />
-        <Property name="Ordinal" type="System.Int64" />
+        <Property name="CID" type="System.Int64" />
         <Property name="Name" isIdentifierPart="true" />
         <Property name="Type" />
       </Properties>
@@ -105,11 +102,6 @@
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
           <Parameters method="SelectObjects">
             <Parameter value="ViewColumns" />
-            <Parameter>
-              <Parameter value="Ordinal">
-                <Parameter value="cid" />
-              </Parameter>
-            </Parameter>
           </Parameters>
         </Service>
       </Services>
@@ -134,7 +126,7 @@
   </Types>
   <MappedTypes>
     <MappedType name="Table" underlyingType="Table">
-      <Selection restrictions="{Name}" />
+      <Selection restrictions="{Name}" ordering="Name" />
       <Identifier>
         <Part name="Catalog">
           <Conversion>
@@ -149,6 +141,55 @@
         <Property name="IsSystemObject" underlyingMember="Name">
           <Conversion>
             <Calculate expr="{0} LIKE 'sqlite_%'" exprType="System.Boolean" />
+          </Conversion>
+        </Property>
+      </Properties>
+    </MappedType>
+    <MappedType name="TableColumn" underlyingType="TableColumn">
+      <Selection restrictions="{Table},{Name}" ordering="Table,CID" />
+      <Identifier>
+        <Part name="Catalog">
+          <Conversion>
+            <Calculate expr="'main'" exprType="System.String" />
+          </Conversion>
+        </Part>
+        <Part name="Table" underlyingMember="Table" />
+        <Part name="Name" underlyingMember="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Catalog" isIdentifierPart="true" />
+        <Property name="Table" isIdentifierPart="true" />
+        <Property name="Ordinal" underlyingMember="CID">
+          <Conversion>
+            <ChangeType type="System.Int32" />
+          </Conversion>
+        </Property>
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="NativeDataType" underlyingMember="Type" />
+        <Property name="AdoDotNetDataType" underlyingMember="Type">
+          <Conversion>
+            <CallMapper />
+          </Conversion>
+        </Property>
+        <Property name="AdoDotNetDbType" underlyingMember="Type">
+          <Conversion>
+            <CallMapper />
+          </Conversion>
+        </Property>
+        <Property name="FrameworkDataType" underlyingMember="Type">
+          <Conversion>
+            <CallMapper />
+          </Conversion>
+        </Property>
+        <Property name="IsNullable" underlyingMember="NotNull">
+          <Conversion>
+            <Calculate expr="{0} = 0" exprType="System.Boolean" />
+          </Conversion>
+        </Property>
+        <Property name="DefaultValue" underlyingMember="DefaultValue" />
+        <Property name="IsComputed" underlyingMember="Hidden">
+          <Conversion>
+            <Calculate expr="{0} IN (2, 3)" exprType="System.Boolean"/>
           </Conversion>
         </Property>
       </Properties>

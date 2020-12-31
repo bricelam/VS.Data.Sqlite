@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="VS.Data.Sqlite.0b471821-68a4-49dd-b175-e6daf4e5cebf" Version="1.0" Language="en-US" Publisher="Brice Lambson" />
     <DisplayName>VisualStudio.Data.Sqlite</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Description>Data Designer Extensibility (DDEX) provider for Microsoft.Data.Sqlite.</Description>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />
