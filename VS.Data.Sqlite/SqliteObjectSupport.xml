@@ -3,14 +3,10 @@
   <Types>
     <RootType>
       <Properties>
-        <Property name="DataSource" />
+        <Property name="DatabaseName" />
       </Properties>
       <Services>
-        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Framework.AdoDotNet.AdoDotNetRootObjectSelector">
-          <Parameters method="SelectObjects">
-            <Parameter />
-          </Parameters>
-        </Service>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteRootObjectSelector" />
       </Services>
     </RootType>
     <Type name="Table">

@@ -65,6 +65,7 @@
     <Compile Include="SqliteObjectSelector.cs" />
     <Compile Include="SqliteProviderObjectFactory.cs" />
     <Compile Include="SqliteDataPackage.cs" />
+    <Compile Include="SqliteRootObjectSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">

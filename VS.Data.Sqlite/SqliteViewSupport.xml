@@ -3,7 +3,7 @@
   <Views>
     <View name="SQLite">
       <ConnectionNode>
-        <InitialDisplayName>{Root.DataSource}</InitialDisplayName>
+        <InitialDisplayName>{Root.DatabaseName}</InitialDisplayName>
         <Children>
           <StaticNode>
             <DisplayName resource="Tables" />
