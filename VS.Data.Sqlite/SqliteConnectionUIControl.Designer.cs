@@ -40,9 +40,10 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             // _browseButton
             // 
             _browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            _browseButton.Location = new System.Drawing.Point(297, 16);
+            _browseButton.Location = new System.Drawing.Point(593, 31);
+            _browseButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             _browseButton.Name = "_browseButton";
-            _browseButton.Size = new System.Drawing.Size(75, 23);
+            _browseButton.Size = new System.Drawing.Size(150, 44);
             _browseButton.TabIndex = 1;
             _browseButton.Text = "&Browse...";
             _browseButton.UseVisualStyleBackColor = true;
@@ -51,9 +52,10 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             // _dataSourceLabel
             // 
             _dataSourceLabel.AutoSize = true;
-            _dataSourceLabel.Location = new System.Drawing.Point(-3, 0);
+            _dataSourceLabel.Location = new System.Drawing.Point(-6, 0);
+            _dataSourceLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             _dataSourceLabel.Name = "_dataSourceLabel";
-            _dataSourceLabel.Size = new System.Drawing.Size(101, 13);
+            _dataSourceLabel.Size = new System.Drawing.Size(203, 25);
             _dataSourceLabel.TabIndex = 2;
             _dataSourceLabel.Text = "&Database file name:";
             // 
@@ -62,9 +64,10 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             this._dataSourceTextBox.AccessibleName = "Database file name";
             this._dataSourceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._dataSourceTextBox.Location = new System.Drawing.Point(0, 18);
+            this._dataSourceTextBox.Location = new System.Drawing.Point(0, 35);
+            this._dataSourceTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this._dataSourceTextBox.Name = "_dataSourceTextBox";
-            this._dataSourceTextBox.Size = new System.Drawing.Size(292, 20);
+            this._dataSourceTextBox.Size = new System.Drawing.Size(580, 31);
             this._dataSourceTextBox.TabIndex = 0;
             this._dataSourceTextBox.TextChanged += new System.EventHandler(this.HandleDataSourceChanged);
             // 
@@ -77,14 +80,14 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             // 
             // SqliteConnectionUIControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(_dataSourceLabel);
             this.Controls.Add(_browseButton);
             this.Controls.Add(this._dataSourceTextBox);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "SqliteConnectionUIControl";
-            this.Size = new System.Drawing.Size(371, 150);
+            this.Size = new System.Drawing.Size(742, 288);
             this.ResumeLayout(false);
             this.PerformLayout();
 

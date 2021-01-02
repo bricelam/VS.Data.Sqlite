@@ -25,7 +25,9 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                 CREATE TABLE table1 (
                     column1 INTEGER NOT NULL CONSTRAINT pk1 PRIMARY KEY AUTOINCREMENT,
                     column2 INTEGER CONSTRAINT ak1 UNIQUE,
-                    column3 INTEGER CONSTRAINT fk1 REFERENCES table2 (id) ON DELETE CASCADE ON UPDATE CASCADE
+                    column3 INTEGER CONSTRAINT fk1 REFERENCES table2 (id) ON DELETE CASCADE ON UPDATE CASCADE,
+                    column4 AS (1),
+                    column4 AS (1) STORED
                 );
 
                 CREATE UNIQUE INDEX ix1 ON table1 (column3);
@@ -55,7 +57,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                         t.Columns,
                         c =>
                         {
-                            // TODO: Verify DefaultValue & IsComputed
+                            // TODO: Verify DefaultValue
                             Assert.Equal("column1", c.Name);
                             Assert.Equal(new object[] { "main", null, "table1", "column1" }, c.Identifier);
                             Assert.Equal(0, c.Ordinal);
@@ -66,7 +68,17 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                             Assert.False(c.IsNullable);
                         },
                         c => Assert.Equal("column2", c.Name),
-                        c => Assert.Equal("column3", c.Name));
+                        c => Assert.Equal("column3", c.Name),
+                        c =>
+                        {
+                            Assert.Equal("column4", c.Name);
+                            Assert.True(c.IsComputed);
+                        },
+                        c =>
+                        {
+                            Assert.Equal("column5", c.Name);
+                            Assert.True(c.IsComputed);
+                        });
                     Assert.Throws<NotSupportedException>(() => t.ForeignKeys);
                     Assert.Throws<NotSupportedException>(() => t.UniqueKeys);
                 },

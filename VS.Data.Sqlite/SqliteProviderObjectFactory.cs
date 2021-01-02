@@ -18,14 +18,13 @@ namespace Microsoft.VisualStudio.Data.Sqlite
         {
             DbProviderFactoriesEx.RegisterFactory("Microsoft.Data.Sqlite", typeof(SqliteFactory));
 
-            // TODO: Find a better way
             AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
             {
                 var assembly = typeof(SqliteFactory).Assembly;
 
                 return args.Name == assembly.FullName
-                    ? assembly
-                    : null;
+                     ? assembly
+                     : null;
             };
         }
 
