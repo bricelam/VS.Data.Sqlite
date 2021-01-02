@@ -27,7 +27,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                     column2 INTEGER CONSTRAINT ak1 UNIQUE,
                     column3 INTEGER CONSTRAINT fk1 REFERENCES table2 (id) ON DELETE CASCADE ON UPDATE CASCADE,
                     column4 AS (1),
-                    column4 AS (1) STORED
+                    column5 AS (1) STORED
                 );
 
                 CREATE UNIQUE INDEX ix1 ON table1 (column3);
