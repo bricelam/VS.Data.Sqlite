@@ -89,7 +89,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3">
-      <Version>2.0.4</Version>
+      <Version>2.0.5-pre20201231105030</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -118,7 +118,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Update="$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.0.4\runtimes\win-x86\native\e_sqlite3.dll">
+    <Content Update="$(NuGetPackageRoot)sqlitepclraw.lib.e_sqlite3\2.0.5-pre20201231105030\runtimes\win-x86\native\e_sqlite3.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
