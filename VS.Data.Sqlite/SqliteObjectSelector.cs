@@ -106,11 +106,30 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             command.Parameters.AddWithValue("$table", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
             command.Parameters.AddWithValue("$name", (restrictions.Length <= 1 ? null : restrictions[1]) ?? DBNull.Value);
 
-            var dataTable = new DataTable();
+            var dataTable = new DataTable
+            {
+                Columns =
+                {
+                    { "table" },
+                    { "cid", typeof(long) },
+                    { "name" },
+                    { "type" },
+                    { "notnull", typeof(long) },
+                    { "dflt_value" },
+                    { "pk", typeof(long) },
+                    { "hidden", typeof(long) }
+                }
+            };
             using (var reader = command.ExecuteReader())
             {
-                // TODO: Handle variant column dflt_value
-                dataTable.Load(reader);
+                while (reader.Read())
+                {
+                    var values = new object[8];
+                    reader.GetValues(values);
+
+                    // NB: Can't use Load because dflt_value is nullable without a declared type
+                    dataTable.Rows.Add(values);
+                }
             }
 
             // TODO: Get collSeq and autoinc via sqlite3_table_column_metadata

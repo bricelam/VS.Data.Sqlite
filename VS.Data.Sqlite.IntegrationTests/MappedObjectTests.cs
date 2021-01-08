@@ -24,7 +24,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             command.ExecuteWithoutResults(@"
                 CREATE TABLE table1 (
                     column1 INTEGER NOT NULL CONSTRAINT pk1 PRIMARY KEY AUTOINCREMENT,
-                    column2 INTEGER CONSTRAINT ak1 UNIQUE,
+                    column2 INTEGER DEFAULT 1 CONSTRAINT ak1 UNIQUE,
                     column3 INTEGER CONSTRAINT fk1 REFERENCES table2 (id) ON DELETE CASCADE ON UPDATE CASCADE,
                     column4 AS (1),
                     column5 AS (1) STORED
@@ -57,7 +57,6 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                         t.Columns,
                         c =>
                         {
-                            // TODO: Verify DefaultValue
                             Assert.Equal("column1", c.Name);
                             Assert.Equal(new object[] { "main", null, "table1", "column1" }, c.Identifier);
                             Assert.Equal(0, c.Ordinal);
@@ -67,7 +66,11 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                             Assert.Equal(typeof(long), c.FrameworkDataType);
                             Assert.False(c.IsNullable);
                         },
-                        c => Assert.Equal("column2", c.Name),
+                        c =>
+                        {
+                            Assert.Equal("column2", c.Name);
+                            Assert.Equal("1", c.DefaultValue);
+                        },
                         c => Assert.Equal("column3", c.Name),
                         c =>
                         {

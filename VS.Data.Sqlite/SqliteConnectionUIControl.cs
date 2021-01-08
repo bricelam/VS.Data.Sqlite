@@ -7,6 +7,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
     {
         public SqliteConnectionUIControl()
         {
+            // TODO: Make _dataSourceTextBox a drop target for files
             InitializeComponent();
         }
 
