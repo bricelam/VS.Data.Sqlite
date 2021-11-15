@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net4.7.2</TargetFramework>
+    <RootNamespace>SqliteVisualizer</RootNamespace>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="XCOPY /Y /D &quot;$(TargetPath)&quot; &quot;$(VisualStudioDir)\Visualizers\&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.DebuggerVisualizers" Version="17.0.1061105" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.1.619-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>

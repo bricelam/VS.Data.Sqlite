@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using static Microsoft.VisualStudio.VSConstants;
 using Task = System.Threading.Tasks.Task;
 
 namespace Microsoft.VisualStudio.Data.Sqlite
@@ -26,6 +29,8 @@ namespace Microsoft.VisualStudio.Data.Sqlite
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(PackageGuidString)]
     [ProvideService(typeof(SSqliteProviderObjectFactory), IsAsyncQueryable = true)]
+    // TODO: Is Debugging too late?
+    [ProvideAutoLoad(UICONTEXT.Debugging_string, PackageAutoLoadFlags.BackgroundLoad)]
     public sealed class SqliteDataPackage : AsyncPackage
     {
         /// <summary>
@@ -49,11 +54,36 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                 (_, __, ___) => Task.FromResult<object>(new SqliteProviderObjectFactory()),
                 promote: true);
 
+            var sourceDir = Path.GetDirectoryName(new Uri(typeof(SqliteDataPackage).Assembly.CodeBase).LocalPath);
+
+            var debuggerAssembly = Path.Combine(sourceDir, "SqliteVisualizer.UI.dll");
+            var debuggeeAssembly = Path.Combine(sourceDir, "SqliteVisualizer.DebuggeeSide.dll");
+
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+
+            var shell = (IVsShell)await GetServiceAsync(typeof(SVsShell));
+            var hr = shell.GetProperty((int)__VSSPROPID2.VSSPROPID_VisualStudioDir, out var visualStudioDir);
+            Marshal.ThrowExceptionForHR(hr);
+
+            var destDir = Path.Combine((string)visualStudioDir, "Visualizers");
+
+            CopyFileIfNewer(debuggerAssembly, destDir);
+            CopyFileIfNewer(debuggeeAssembly, Path.Combine(destDir, "netstandard2.0"));
         }
 
         #endregion
+
+        private static void CopyFileIfNewer(string sourceFileName, string destDir)
+        {
+            var destFileName = Path.Combine(destDir, Path.GetFileName(sourceFileName));
+
+            if (File.GetLastWriteTime(sourceFileName) > File.GetLastWriteTime(destFileName))
+            {
+                Directory.CreateDirectory(destDir);
+                File.Copy(sourceFileName, destFileName, overwrite: true);
+            }
+        }
     }
 }

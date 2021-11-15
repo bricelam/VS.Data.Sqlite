@@ -1,0 +1,67 @@
+﻿<Window x:Class="SqliteVisualizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="710"
+        Height="375"
+        MinWidth="400"
+        MinHeight="250"
+        ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False"
+        Title="SQLite Visualizer"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,0,6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" VerticalAlignment="Center">_Table:</Label>
+            <ComboBox Grid.Column="1"
+                      Width="250"
+                      Margin="6,0,0,0"
+                      VerticalAlignment="Center"
+                      VerticalContentAlignment="Center" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <DataGrid AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      CanUserReorderColumns="False"
+                      CanUserResizeRows="False"
+                      CanUserSortColumns="False"
+                      EnableRowVirtualization="True"
+                      HorizontalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                      RowHeaderWidth="20"
+                      SelectionUnit="Cell"
+                      VerticalGridLinesBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
+                <DataGrid.Resources>
+                    <Style x:Key="EditableCellTextBoxStyle" TargetType="{x:Type TextBox}">
+                        <Setter Property="Control.BorderThickness" Value="0" />
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1"
+                    MinWidth="75"
+                    MinHeight="23"
+                    Margin="0,6,0,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    IsCancel="True"
+                    IsDefault="True">
+                Close
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

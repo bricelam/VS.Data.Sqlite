@@ -1,0 +1,9 @@
+﻿WINDOW_STYLE
+WINDOW_EX_STYLE
+GetWindowLong
+SetWindowLong
+
+WM_SETICON
+ICON_SMALL
+ICON_BIG
+SendMessage

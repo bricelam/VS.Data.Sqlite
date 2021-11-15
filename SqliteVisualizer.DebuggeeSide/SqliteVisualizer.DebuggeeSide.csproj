@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>SqliteVisualizer</RootNamespace>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="XCOPY /Y /D &quot;$(TargetPath)&quot; &quot;$(VisualStudioDir)\Visualizers\netstandard2.0\&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.DebuggerVisualizers" Version="17.0.1061105" />
+  </ItemGroup>
+
+</Project>

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VS.Data.Sqlite", "VS.Data.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VS.Data.Sqlite.IntegrationTests", "VS.Data.Sqlite.IntegrationTests\VS.Data.Sqlite.IntegrationTests.csproj", "{44561772-A0B0-491C-B1AB-7FD755AA5707}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqliteVisualizer.DebuggeeSide", "SqliteVisualizer.DebuggeeSide\SqliteVisualizer.DebuggeeSide.csproj", "{9B0EB003-7D84-48FC-9456-2309F7A4CD76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqliteVisualizer.UI", "SqliteVisualizer.UI\SqliteVisualizer.UI.csproj", "{2BDDF5FB-97EA-4206-9F92-C4F9D07C2CE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{44561772-A0B0-491C-B1AB-7FD755AA5707}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44561772-A0B0-491C-B1AB-7FD755AA5707}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44561772-A0B0-491C-B1AB-7FD755AA5707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B0EB003-7D84-48FC-9456-2309F7A4CD76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0EB003-7D84-48FC-9456-2309F7A4CD76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B0EB003-7D84-48FC-9456-2309F7A4CD76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B0EB003-7D84-48FC-9456-2309F7A4CD76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BDDF5FB-97EA-4206-9F92-C4F9D07C2CE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BDDF5FB-97EA-4206-9F92-C4F9D07C2CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BDDF5FB-97EA-4206-9F92-C4F9D07C2CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BDDF5FB-97EA-4206-9F92-C4F9D07C2CE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
