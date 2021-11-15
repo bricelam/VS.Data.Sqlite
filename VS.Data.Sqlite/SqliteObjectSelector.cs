@@ -19,6 +19,8 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
         {
             { "Tables",  SelectTables },
             { "TableColumns", SelectTableColumns },
+            { "TableIndexes", SelectTableIndexes },
+            { "TableIndexColumns", SelectTableIndexColumns },
             { "TableTriggers", SelectTableTriggers },
             { "Views", SelectViews },
             { "ViewColumns", SelectViewColumns },
@@ -77,9 +79,9 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
         var command = connection.CreateCommand();
         command.CommandText =
         @"
-            SELECT t.name, sql, l.type, ncol, wr, strict
+            SELECT t.name, sql, t2.type, ncol, wr, strict
             FROM sqlite_master AS t
-            JOIN pragma_table_list(t.name) AS l
+            JOIN pragma_table_list(t.name) AS t2
             WHERE t.type = 'table'
                 AND ($name IS NULL OR t.name = $name)
         ";
@@ -167,6 +169,58 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
         return dataTable;
     }
 
+    static DataTable SelectTableIndexes(SqliteConnection connection, object[] restrictions)
+    {
+        var command = connection.CreateCommand();
+        command.CommandText =
+        @"
+            SELECT tbl_name, i.name, ""unique"", origin, partial, sql
+            FROM sqlite_master AS i
+            JOIN pragma_index_list(tbl_name) AS i2 ON i2.name = i.name
+            WHERE type = 'index'
+                AND ($table IS NULL OR tbl_name = $table)
+                AND ($name IS NULL OR i.name = $name)
+        ";
+        command.Parameters.AddWithValue("$table", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+        command.Parameters.AddWithValue("$name", (restrictions.Length <= 1 ? null : restrictions[1]) ?? DBNull.Value);
+
+        var dataTable = new DataTable();
+        using (var reader = command.ExecuteReader())
+        {
+            dataTable.Load(reader);
+        }
+
+        // TODO: Synthesize rowid pk constraints?
+        return dataTable;
+    }
+
+    static DataTable SelectTableIndexColumns(SqliteConnection connection, object[] restrictions)
+    {
+        var command = connection.CreateCommand();
+        command.CommandText =
+        @"
+            SELECT tbl_name, i.name AS ""index"", c.seqno, c.cid, c.name, desc, coll, key
+            FROM sqlite_master AS i
+            JOIN pragma_index_info(i.name) AS c
+            JOIN pragma_index_xinfo(i.name) AS c2
+            WHERE i.type = 'index'
+                AND ($table IS NULL OR tbl_name = $table)
+                AND ($index IS NULL OR i.name = $index)
+                AND ($name IS NULL OR c.name = $name)
+        ";
+        command.Parameters.AddWithValue("$table", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+        command.Parameters.AddWithValue("$index", (restrictions.Length <= 1 ? null : restrictions[1]) ?? DBNull.Value);
+        command.Parameters.AddWithValue("$name", (restrictions.Length <= 2 ? null : restrictions[2]) ?? DBNull.Value);
+
+        var dataTable = new DataTable();
+        using (var reader = command.ExecuteReader())
+        {
+            dataTable.Load(reader);
+        }
+
+        return dataTable;
+    }
+
     static DataTable SelectTableTriggers(SqliteConnection connection, object[] restrictions)
     {
         var command = connection.CreateCommand();
@@ -199,7 +253,7 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
         @"
             SELECT v.name, sql, ncol
             FROM sqlite_master AS v
-            JOIN pragma_table_list(v.name) AS l
+            JOIN pragma_table_list(v.name) AS v2
             WHERE v.type = 'view'
                 AND ($name IS NULL OR v.name = $name)
         ";

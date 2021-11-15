@@ -4,7 +4,6 @@ using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Services;
 using Microsoft.VisualStudio.Data.Services.RelationalObjectModel;
 using Microsoft.VisualStudio.Data.Services.SupportEntities;
-using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.Shell;
 using Xunit;
 
@@ -26,7 +25,7 @@ public class MappedObjectTests
             CREATE TABLE table1 (
                 column1 INTEGER NOT NULL CONSTRAINT pk1 PRIMARY KEY AUTOINCREMENT,
                 column2 INTEGER DEFAULT 1 CONSTRAINT ak1 UNIQUE,
-                column3 INTEGER CONSTRAINT fk1 REFERENCES table2 (id) ON DELETE CASCADE ON UPDATE CASCADE,
+                column3 TEXT CONSTRAINT fk1 REFERENCES table2 (id) ON DELETE CASCADE ON UPDATE CASCADE,
                 column4 AS (1),
                 column5 AS (1) STORED
             );
@@ -34,7 +33,7 @@ public class MappedObjectTests
             CREATE UNIQUE INDEX ix1 ON table1 (column3);
 
             CREATE TABLE table2 (
-                id INTEGER PRIMARY KEY
+                id TEXT CONSTRAINT pk2 PRIMARY KEY
             );
         ");
 
@@ -84,9 +83,39 @@ public class MappedObjectTests
                         Assert.True(c.IsComputed);
                     });
                 Assert.Throws<NotSupportedException>(() => t.ForeignKeys);
-                Assert.Throws<NotSupportedException>(() => t.UniqueKeys);
+                Assert.Collection(
+                    t.UniqueKeys,
+                    k =>
+                    {
+                        Assert.Equal("ix1", k.Name);
+                        Assert.Collection(
+                            k.Columns,
+                            c => Assert.Equal("column3", c.Name));
+                    },
+                    k =>
+                    {
+                        // ak1
+                        Assert.StartsWith("sqlite_autoindex_", k.Name);
+                        Assert.Collection(
+                            k.Columns,
+                            c => Assert.Equal("column2", c.Name));
+                    });
             },
-            t => Assert.Equal("table2", t.Name));
+            t =>
+            {
+                Assert.Equal("table2", t.Name);
+                Assert.Collection(
+                    t.UniqueKeys,
+                    k =>
+                    {
+                        // pk2
+                        Assert.StartsWith("sqlite_autoindex_", k.Name);
+                        Assert.True(k.IsPrimary);
+                        Assert.Collection(
+                            k.Columns,
+                            c => Assert.Equal("id", c.Name));
+                    });
+            });
     }
 
     [VsFact]

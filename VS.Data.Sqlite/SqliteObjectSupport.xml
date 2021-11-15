@@ -98,6 +98,69 @@
         </Service>
       </Services>
     </Type>
+    <Type name="TableIndex">
+      <Identifier>
+        <Part name="Table" />
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Table" isIdentifierPart="true" />
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="Unique" type="System.Int64" />
+        <Property name="Origin" />
+        <Property name="Partial" type="System.Int64" />
+        <Property name="Sql" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="SelectObjects">
+            <Parameter value="TableIndexes" />
+            <Parameter>
+              <Parameter value="Table">
+                <Parameter value="tbl_name" />
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
+    <Type name="TableIndexColumn">
+      <Identifier>
+        <Part name="Table" />
+        <Part name="Index" />
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Table" isIdentifierPart="true" />
+        <Property name="Index" isIdentifierPart="true" />
+        <Property name="SeqNo" type="System.Int64" />
+        <Property name="CID" type="System.Int64" />
+        <!-- TODO: Use rowid for Name when CID is -1? -->
+        <!-- TODO: Use (expr) for Name when CID is -2? -->
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="Descending" type="System.Int64" />
+        <Property name="Collate" />
+        <Property name="Key" type="System.Int64" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="SelectObjects">
+            <Parameter value="TableIndexColumns" />
+            <Parameter>
+              <Parameter value="Table">
+                <Parameter value="tbl_name" />
+              </Parameter>
+              <Parameter value="Descending">
+                <Parameter value="desc" />
+              </Parameter>
+              <Parameter value="Collate">
+                <Parameter value="collSeq" />
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
     <Type name="TableTrigger">
       <Identifier>
         <Part name="Table" />
@@ -266,6 +329,42 @@
             <Calculate expr="{0} IN (2, 3)" exprType="System.Boolean"/>
           </Conversion>
         </Property>
+      </Properties>
+    </MappedType>
+    <MappedType name="TableUniqueKey" underlyingType="TableIndex">
+      <Selection restrictions="{Table},{Name}" filter="Unique = 1" ordering="Table,Name" />
+      <Identifier>
+        <Part name="Catalog">
+          <Conversion>
+            <Calculate expr="'main'" exprType="System.String" />
+          </Conversion>
+        </Part>
+        <Part name="Table" underlyingMember="Table" />
+        <Part name="Name" underlyingMember="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="IsPrimary" underlyingMember="Origin">
+          <Conversion>
+            <Calculate expr="{0} = 'pk'" exprType="System.Boolean" />
+          </Conversion>
+        </Property>
+      </Properties>
+    </MappedType>
+    <MappedType name="TableUniqueKeyColumn" underlyingType="TableIndexColumn">
+      <Selection restrictions="{Table},{TableUniqueKey},{Name}" ordering="Table,Index,SeqNo" />
+      <Identifier>
+        <Part name="Catalog">
+          <Conversion>
+            <Calculate expr="'main'" exprType="System.String" />
+          </Conversion>
+        </Part>
+        <Part name="Table" underlyingMember="Table" />
+        <Part name="UniqueKey" underlyingMember="Index" />
+        <Part name="Name" underlyingMember="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Name" isIdentifierPart="true" />
       </Properties>
     </MappedType>
     <MappedType name="View" underlyingType="View">

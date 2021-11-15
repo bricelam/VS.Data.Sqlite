@@ -50,6 +50,45 @@
                       </Children>
                     </StaticNode>
                     <StaticNode>
+                      <DisplayName resource="Indexes" />
+                      <Children>
+                        <Selection type="TableIndex" restrictions="{table.Name}" ordering="Name">
+                          <SelectionNode nodeId="index">
+                            <Icon name="PrimaryKey" when="{Origin} = 'pk'" />
+                            <!-- TODO: Should uinque, non-partial indexes get this icon? -->
+                            <Icon name="UniqueKey" when="{Origin} = 'u'" />
+                            <Icon name="Index" />
+                            <!-- TODO: Command to show Sql? -->
+                            <Properties>
+                              <Property name="Table" />
+                              <Property name="Name" />
+                              <Property name="Unique" />
+                              <Property name="Origin" />
+                              <Property name="Partial" />
+                            </Properties>
+                            <!-- TODO: Denormalize to optimize for single-column indexes? -->
+                            <Children>
+                              <Selection type="TableIndexColumn" restrictions="{index.Table},{index.Name}" ordering="SeqNo">
+                                <SelectionNode>
+                                  <Icon name="Column" />
+                                  <Properties>
+                                    <Property name="Table" />
+                                    <Property name="Index" />
+                                    <Property name="SeqNo" />
+                                    <Property name="CID" />
+                                    <Property name="Name" />
+                                    <Property name="Descending" />
+                                    <Property name="Collate" />
+                                    <Property name="Key" />
+                                  </Properties>
+                                </SelectionNode>
+                              </Selection>
+                            </Children>
+                          </SelectionNode>
+                        </Selection>
+                      </Children>
+                    </StaticNode>
+                    <StaticNode>
                       <DisplayName resource="Triggers" />
                       <Children>
                         <Selection type="TableTrigger" restrictions="{table.Name}" ordering="Name">
@@ -63,7 +102,7 @@
                         </Selection>
                       </Children>
                     </StaticNode>
-                    <!-- TODO: Indexes and Foreign Keys -->
+                    <!-- TODO: Foreign Keys -->
                   </Children>
                 </SelectionNode>
               </Selection>
