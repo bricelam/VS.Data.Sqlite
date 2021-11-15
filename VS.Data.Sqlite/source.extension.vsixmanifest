@@ -7,6 +7,7 @@
         <MoreInfo>https://github.com/bricelam/VS.Data.Sqlite</MoreInfo>
         <License>Resources\LICENSE.md</License>
         <Icon>Resources\Icon 128x128.png</Icon>
+        <Preview>true</Preview>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
