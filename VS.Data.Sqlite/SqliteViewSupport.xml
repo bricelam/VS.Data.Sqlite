@@ -15,6 +15,10 @@
                   <Properties>
                     <Property name="Name" />
                   </Properties>
+                  <Commands>
+                    <!-- Retrieve Data -->
+                    <Command guid="501822E1-B5AF-11d0-B4DC-00A0C91506EF" cmdid="0x3060" provider="884DD964-5327-461f-9F06-6484DD540F8F" />
+                  </Commands>
                   <Children>
                     <StaticNode>
                       <DisplayName resource="Columns" />
@@ -68,6 +72,10 @@
                   <Properties>
                     <Property name="Name" />
                   </Properties>
+                  <Commands>
+                    <!-- Retrieve Data -->
+                    <Command guid="501822E1-B5AF-11d0-B4DC-00A0C91506EF" cmdid="0x3060" provider="884DD964-5327-461f-9F06-6484DD540F8F" />
+                  </Commands>
                   <Children>
                     <Selection type="ViewColumn" restrictions="{view.Name}" ordering="CID">
                       <SelectionNode>

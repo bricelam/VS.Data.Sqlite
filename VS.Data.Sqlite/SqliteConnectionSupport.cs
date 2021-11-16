@@ -14,6 +14,10 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             {
                 return new SqliteSourceInformation(Site);
             }
+            if (serviceType == typeof(IVsDataObjectIdentifierConverter))
+            {
+                return new SqliteObjectIdentifierConverter(Site);
+            }
             if (serviceType == typeof(IVsDataObjectSupport))
             {
                 return new DataObjectSupport(
