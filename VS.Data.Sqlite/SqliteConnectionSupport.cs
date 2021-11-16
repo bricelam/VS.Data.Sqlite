@@ -10,6 +10,10 @@ namespace Microsoft.VisualStudio.Data.Sqlite
     {
         protected override object CreateService(IServiceContainer container, Type serviceType)
         {
+            if (serviceType == typeof(IVsDataSourceInformation))
+            {
+                return new SqliteSourceInformation(Site);
+            }
             if (serviceType == typeof(IVsDataObjectSupport))
             {
                 return new DataObjectSupport(
