@@ -24,6 +24,10 @@ namespace Microsoft.VisualStudio.Data.Sqlite
                     GetType().Namespace + ".SqliteObjectSupport",
                     GetType().Assembly);
             }
+            if (serviceType == typeof(IVsDataMappedObjectConverter))
+            {
+                return new SqliteMappedObjectConverter(Site);
+            }
 
             return base.CreateService(container, serviceType);
         }

@@ -1,4 +1,4 @@
 [submodule "efcore"]
 	path = efcore
-	url = https://github.com/bricelam/efcore.git
-	branch = ddex2
+	url = https://github.com/dotnet/efcore.git
+	branch = release/6.0
