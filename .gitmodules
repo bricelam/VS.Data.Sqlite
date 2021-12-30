@@ -1,4 +1,0 @@
-[submodule "efcore"]
-	path = efcore
-	url = https://github.com/dotnet/efcore.git
-	branch = release/6.0
