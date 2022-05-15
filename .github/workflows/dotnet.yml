@@ -1,0 +1,37 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+    - name: Restore dependencies
+      run: MSBuild /t:Restore
+    - name: Build
+      run: MSBuild
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        path: **/*.vsix
+    - name: Test
+      uses: microsoft/vstest-action@main
+      with:
+        searchFolder: .
+      run: dotnet test --no-build --verbosity normal
+#    - name: Publish
+#      if: ${{ github.event_name == 'push' }}
+#      env:
+#        APPVEYOR_REPO_PROVIDER: gitHub
+#        APPVEYOR_REPO_NAME: ${{ github.repository }}
+#        APPVEYOR_REPO_BRANCH: ${{ github.ref_name }}
+#      run: |
+#        (New-Object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
+#        Vsix-PublishToGallery
