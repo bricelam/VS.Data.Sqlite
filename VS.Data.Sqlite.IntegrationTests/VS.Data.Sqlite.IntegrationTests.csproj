@@ -13,7 +13,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="VsixTesting.Xunit" Version="0.1.72" />
+    <PackageReference Include="VsixTesting.Xunit" Version="0.1.75" />
     <PackageReference Include="FlaUI.UIA2" Version="3.2.0" />
   </ItemGroup>
 

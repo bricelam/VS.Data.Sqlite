@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="VS.Data.Sqlite.0b471821-68a4-49dd-b175-e6daf4e5cebf" Version="1.0" Language="en-US" Publisher="Brice Lambson" />
+    <Identity Id="0b471821-68a4-49dd-b175-e6daf4e5cebf" Version="|%CurrentProject%;GetBuildVersion|" Language="en-US" Publisher="Brice Lambson" />
     <DisplayName>VisualStudio.Data.Sqlite</DisplayName>
     <Description>Data Designer Extensibility (DDEX) provider for Microsoft.Data.Sqlite.</Description>
+    <MoreInfo>https://github.com/bricelam/VS.Data.Sqlite</MoreInfo>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
