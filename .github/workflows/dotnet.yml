@@ -29,7 +29,7 @@ jobs:
         testAssembly: '**\\VisualStudio.Data.Sqlite.IntegrationTests.dll'
         searchFolder: 'VS.Data.Sqlite.IntegrationTests\\bin\\'
     - name: Publish
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ github.repository_owner == 'bricelam' && github.event_name == 'push' }}
       env:
         APPVEYOR_REPO_PROVIDER: gitHub
         APPVEYOR_REPO_NAME: ${{ github.repository }}
