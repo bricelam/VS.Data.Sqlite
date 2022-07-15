@@ -112,6 +112,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Resources\Icon 128x128.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\LICENSE.md">
+      <Link>Resources\LICENSE.md</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <EmbeddedResource Include="SqliteConnectionUIControl.resx">
       <DependentUpon>SqliteConnectionUIControl.cs</DependentUpon>
     </EmbeddedResource>
