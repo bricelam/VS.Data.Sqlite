@@ -112,7 +112,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Resources\Icon 128x128.png">
+    <Content Include="Resources\Database.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="..\LICENSE.md">
