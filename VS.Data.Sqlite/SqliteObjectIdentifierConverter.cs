@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.Data.Services;
 
 namespace Microsoft.VisualStudio.Data.Sqlite
 {
+    // Needed to compensate for missing DbCommandBuilder support in the driver
     class SqliteObjectIdentifierConverter : AdoDotNetObjectIdentifierConverter
     {
         public SqliteObjectIdentifierConverter(IVsDataConnection connection)
@@ -20,7 +21,6 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             if (format.HasFlag(DataObjectIdentifierFormat.WithQuotes)
                 && RequiresQuoting(identifierPartString))
             {
-                // TODO: Why doesn't Query Designer actually use this?
                 return "\"" + identifierPartString.Replace("\"", "\"\"") + "\"";
             }
 
