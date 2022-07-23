@@ -19,7 +19,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -102,6 +102,15 @@ namespace Microsoft.VisualStudio.Data.Sqlite.Properties {
         internal static string DataSource_DisplayName {
             get {
                 return ResourceManager.GetString("DataSource_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested collection ({0}) is not defined..
+        /// </summary>
+        internal static string UnknownCollection {
+            get {
+                return ResourceManager.GetString("UnknownCollection", resourceCulture);
             }
         }
     }

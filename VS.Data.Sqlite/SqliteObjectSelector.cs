@@ -6,6 +6,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Framework.AdoDotNet;
 using Microsoft.VisualStudio.Data.Services;
 using Microsoft.VisualStudio.Data.Services.SupportEntities;
+using Microsoft.VisualStudio.Data.Sqlite.Properties;
 
 namespace Microsoft.VisualStudio.Data.Sqlite;
 
@@ -47,8 +48,7 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
             var collectionName = (string)parameters[0];
             if (!_objectSelectors.TryGetValue(collectionName, out var selectObjects))
             {
-                // TODO: Resourcify
-                throw new ArgumentException($"The requested collection ({collectionName}) is not defined.");
+                throw new ArgumentException(string.Format(Resources.UnknownCollection, collectionName));
             }
 
             var dataTable = selectObjects(

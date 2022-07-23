@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Data.Services;
 
 namespace Microsoft.VisualStudio.Data.Sqlite;
 
-// Needed to compensate for missing DbCommandBuilder support in the driver
+// NB: This is needed to compensate for missing DbCommandBuilder support in the driver
 class SqliteObjectIdentifierConverter : AdoDotNetObjectIdentifierConverter
 {
     public SqliteObjectIdentifierConverter(IVsDataConnection connection)

@@ -77,17 +77,22 @@
                     <Command guid="501822E1-B5AF-11d0-B4DC-00A0C91506EF" cmdid="0x3060" provider="884DD964-5327-461f-9F06-6484DD540F8F" />
                   </Commands>
                   <Children>
-                    <Selection type="ViewColumn" restrictions="{view.Name}" ordering="CID">
-                      <SelectionNode>
-                        <Icon name="Column" />
-                        <Properties>
-                          <Property name="View" />
-                          <Property name="CID" />
-                          <Property name="Name" />
-                          <Property name="Type" />
-                        </Properties>
-                      </SelectionNode>
-                    </Selection>
+                    <StaticNode>
+                      <DisplayName resource="Columns" />
+                      <Children>
+                        <Selection type="ViewColumn" restrictions="{view.Name}" ordering="CID">
+                          <SelectionNode>
+                            <Icon name="Column" />
+                            <Properties>
+                              <Property name="View" />
+                              <Property name="CID" />
+                              <Property name="Name" />
+                              <Property name="Type" />
+                            </Properties>
+                          </SelectionNode>
+                        </Selection>
+                      </Children>
+                    </StaticNode>
                     <StaticNode>
                       <DisplayName resource="Triggers" />
                       <Children>

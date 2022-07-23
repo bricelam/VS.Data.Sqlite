@@ -132,4 +132,7 @@
   <data name="DataSource_DisplayName" xml:space="preserve">
     <value>SQLite</value>
   </data>
+  <data name="UnknownCollection" xml:space="preserve">
+    <value>The requested collection ({0}) is not defined.</value>
+  </data>
 </root>
