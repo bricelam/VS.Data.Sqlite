@@ -1,31 +1,23 @@
 ﻿using Microsoft.VisualStudio.Data.Framework.AdoDotNet;
 using Microsoft.VisualStudio.Data.Services;
 
-namespace Microsoft.VisualStudio.Data.Sqlite
+namespace Microsoft.VisualStudio.Data.Sqlite;
+
+class SqliteSourceInformation : AdoDotNetSourceInformation
 {
-    internal class SqliteSourceInformation : AdoDotNetSourceInformation
+    public SqliteSourceInformation(IVsDataConnection connection)
+        : base(connection)
     {
-        public SqliteSourceInformation(IVsDataConnection connection)
-            : base(connection)
-        {
-            AddProperty(SupportsQuotedIdentifierParts, true);
-            AddProperty(IdentifierOpenQuote, "\"");
-            AddProperty(IdentifierCloseQuote, "\"");
-        }
-
-        protected override object RetrieveValue(string propertyName)
-        {
-            switch (propertyName)
-            {
-                case DataSourceProduct:
-                    return "SQLite";
-
-                case DataSourceVersion:
-                    return Connection.ServerVersion;
-
-                default:
-                    return base.RetrieveValue(propertyName);
-            }
-        }
+        AddProperty(SupportsQuotedIdentifierParts, true);
+        AddProperty(IdentifierOpenQuote, "\"");
+        AddProperty(IdentifierCloseQuote, "\"");
     }
+
+    protected override object RetrieveValue(string propertyName)
+        => propertyName switch
+        {
+            DataSourceProduct => "SQLite",
+            DataSourceVersion => Connection.ServerVersion,
+            _ => base.RetrieveValue(propertyName)
+        };
 }

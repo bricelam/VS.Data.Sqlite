@@ -6,61 +6,60 @@ using Microsoft.VisualStudio.Data.Services;
 
 using static SQLitePCL.raw;
 
-namespace Microsoft.VisualStudio.Data.Sqlite
+namespace Microsoft.VisualStudio.Data.Sqlite;
+
+class SqliteMappedObjectConverter : AdoDotNetMappedObjectConverter
 {
-    internal class SqliteMappedObjectConverter : AdoDotNetMappedObjectConverter
+    public SqliteMappedObjectConverter(IVsDataConnection connection)
+        : base(connection)
     {
-        public SqliteMappedObjectConverter(IVsDataConnection connection)
-            : base(connection)
+    }
+
+    protected override int GetProviderTypeFromNativeType(string nativeType)
+    {
+        var typeRules = new Func<string, int?>[]
         {
-        }
+            name => name.IndexOf("INT", StringComparison.OrdinalIgnoreCase) >= 0
+                ? SQLITE_INTEGER
+                : null,
+            name => name.IndexOf("CHAR", StringComparison.OrdinalIgnoreCase) >= 0
+                    || name.IndexOf("CLOB", StringComparison.OrdinalIgnoreCase) >= 0
+                    || name.IndexOf("TEXT", StringComparison.OrdinalIgnoreCase) >= 0
+                ? SQLITE_TEXT
+                : null,
+            name => name.IndexOf("BLOB", StringComparison.OrdinalIgnoreCase) >= 0
+                ? SQLITE_BLOB
+                : null,
+            name => name.IndexOf("REAL", StringComparison.OrdinalIgnoreCase) >= 0
+                    || name.IndexOf("FLOA", StringComparison.OrdinalIgnoreCase) >= 0
+                    || name.IndexOf("DOUB", StringComparison.OrdinalIgnoreCase) >= 0
+                ? SQLITE_FLOAT
+                : null
+        };
 
-        protected override int GetProviderTypeFromNativeType(string nativeType)
+        return typeRules.Select(r => r(nativeType)).FirstOrDefault(r => r is not null) ?? SQLITE_TEXT;
+    }
+
+    protected override Type GetFrameworkTypeFromNativeType(string nativeType)
+    {
+        var providerType = GetProviderTypeFromNativeType(nativeType);
+        switch (providerType)
         {
-            var typeRules = new Func<string, int?>[]
-            {
-                name => name.IndexOf("INT", StringComparison.OrdinalIgnoreCase) >= 0
-                    ? SQLITE_INTEGER
-                    : (int?)null,
-                name => name.IndexOf("CHAR", StringComparison.OrdinalIgnoreCase) >= 0
-                        || name.IndexOf("CLOB", StringComparison.OrdinalIgnoreCase) >= 0
-                        || name.IndexOf("TEXT", StringComparison.OrdinalIgnoreCase) >= 0
-                    ? SQLITE_TEXT
-                    : (int?)null,
-                name => name.IndexOf("BLOB", StringComparison.OrdinalIgnoreCase) >= 0
-                    ? SQLITE_BLOB
-                    : (int?)null,
-                name => name.IndexOf("REAL", StringComparison.OrdinalIgnoreCase) >= 0
-                        || name.IndexOf("FLOA", StringComparison.OrdinalIgnoreCase) >= 0
-                        || name.IndexOf("DOUB", StringComparison.OrdinalIgnoreCase) >= 0
-                    ? SQLITE_FLOAT
-                    : (int?)null
-            };
+            case SQLITE_INTEGER:
+                return typeof(long);
 
-            return typeRules.Select(r => r(nativeType)).FirstOrDefault(r => r != null) ?? SQLITE_TEXT;
-        }
+            case SQLITE_FLOAT:
+                return typeof(double);
 
-        protected override Type GetFrameworkTypeFromNativeType(string nativeType)
-        {
-            var providerType = GetProviderTypeFromNativeType(nativeType);
-            switch (providerType)
-            {
-                case SQLITE_INTEGER:
-                    return typeof(long);
+            case SQLITE_TEXT:
+                return typeof(string);
 
-                case SQLITE_FLOAT:
-                    return typeof(double);
+            case SQLITE_BLOB:
+                return typeof(byte[]);
 
-                case SQLITE_TEXT:
-                    return typeof(string);
-
-                case SQLITE_BLOB:
-                    return typeof(byte[]);
-
-                default:
-                    Debug.Fail("Unexpected type: " + providerType);
-                    return typeof(string);
-            }
+            default:
+                Debug.Fail("Unexpected type: " + providerType);
+                return typeof(string);
         }
     }
 }
