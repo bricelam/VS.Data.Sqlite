@@ -4,6 +4,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Services;
 using Microsoft.VisualStudio.Data.Services.RelationalObjectModel;
 using Microsoft.VisualStudio.Data.Services.SupportEntities;
+using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.Shell;
 using Xunit;
 
@@ -109,5 +110,34 @@ public class MappedObjectTests
         Assert.Collection(
             tables,
             t => Assert.Equal("A", t.Name));
+    }
+
+    [VsFact]
+    public void Can_select_views()
+    {
+        var connectionFactory = (IVsDataConnectionFactory)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataConnectionFactory));
+        var connection = connectionFactory.CreateConnection(
+            PackageGuids.guidSqliteDataProvider,
+            "Data Source=:memory:",
+            encryptedString: false);
+
+        var command = (IVsDataCommand)connection.GetService(typeof(IVsDataCommand));
+        command.ExecuteWithoutResults(@"
+            CREATE VIEW view1 AS
+            SELECT 1 AS Value;
+        ");
+
+        var selector = (IVsDataMappedObjectSelector)connection.GetService(typeof(IVsDataMappedObjectSelector));
+        var views = selector.SelectMappedObjects<IVsDataView>();
+
+        Assert.Collection(
+            views,
+            v =>
+            {
+                Assert.Equal("main", v.Catalog);
+                Assert.Null(v.Schema);
+                Assert.Equal("view1", v.Name);
+                Assert.Equal(new object[] { "main", null, "view1" }, v.Identifier);
+            });
     }
 }
