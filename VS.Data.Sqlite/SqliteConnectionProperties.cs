@@ -26,7 +26,9 @@ class SqliteConnectionProperties : AdoDotNetConnectionProperties
         }
     }
 
-    public override bool IsComplete => File.Exists(ConnectionStringBuilder["DataSource"]?.ToString());
+    public override bool IsComplete => !string.IsNullOrEmpty(ConnectionStringBuilder["DataSource"]?.ToString()) &&
+        (File.Exists(ConnectionStringBuilder["DataSource"].ToString())
+            || ConnectionStringBuilder["DataSource"].ToString().Equals(":memory:", StringComparison.Ordinal));
 
     class SqliteConnectionStringBuilderMetadata
     {
