@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Framework.AdoDotNet;
 
@@ -24,6 +25,8 @@ class SqliteConnectionProperties : AdoDotNetConnectionProperties
             ConnectionStringBuilder.BrowsableConnectionString = false;
         }
     }
+
+    public override bool IsComplete => File.Exists(ConnectionStringBuilder["DataSource"]?.ToString());
 
     class SqliteConnectionStringBuilderMetadata
     {
