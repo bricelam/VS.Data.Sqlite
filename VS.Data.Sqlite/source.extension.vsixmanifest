@@ -6,7 +6,7 @@
         <Description xml:space="preserve">A Data Designer Extensibility (DDEX) provider for Microsoft.Data.Sqlite.</Description>
         <MoreInfo>https://github.com/bricelam/VS.Data.Sqlite</MoreInfo>
         <License>Resources\LICENSE.md</License>
-        <Icon>Resources\Database.png</Icon>
+        <Icon>Resources\DatabaseAndFeather.png</Icon>
         <Preview>true</Preview>
     </Metadata>
     <Installation>
