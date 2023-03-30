@@ -7,7 +7,6 @@ public partial class SqliteConnectionUIControl : DataConnectionUIControl
 {
     public SqliteConnectionUIControl()
     {
-        // TODO: Make _dataSourceTextBox a drop target for files
         InitializeComponent();
     }
 
@@ -28,5 +27,20 @@ public partial class SqliteConnectionUIControl : DataConnectionUIControl
             return;
 
         _dataSourceTextBox.Text = _openFileDialog.FileName;
+    }
+
+    private void HandleDragDrop(object sender, DragEventArgs e)
+    {
+        var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+        _dataSourceTextBox.Text = files[0];
+    }
+
+    private void HandleDragEnter(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            e.Effect = DragDropEffects.Link;
+        }
     }
 }

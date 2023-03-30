@@ -62,6 +62,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             // _dataSourceTextBox
             // 
             this._dataSourceTextBox.AccessibleName = "Database file name";
+            this._dataSourceTextBox.AllowDrop = true;
             this._dataSourceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._dataSourceTextBox.Location = new System.Drawing.Point(0, 35);
@@ -70,6 +71,8 @@ namespace Microsoft.VisualStudio.Data.Sqlite
             this._dataSourceTextBox.Size = new System.Drawing.Size(580, 31);
             this._dataSourceTextBox.TabIndex = 0;
             this._dataSourceTextBox.TextChanged += new System.EventHandler(this.HandleDataSourceChanged);
+            this._dataSourceTextBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.HandleDragDrop);
+            this._dataSourceTextBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.HandleDragEnter);
             // 
             // _openFileDialog
             // 
