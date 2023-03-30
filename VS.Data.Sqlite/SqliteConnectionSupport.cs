@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Design;
+using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Framework;
 using Microsoft.VisualStudio.Data.Framework.AdoDotNet;
 using Microsoft.VisualStudio.Data.Services.SupportEntities;
@@ -8,6 +9,8 @@ namespace Microsoft.VisualStudio.Data.Sqlite;
 
 class SqliteConnectionSupport : AdoDotNetConnectionSupport
 {
+    private string _connectionString;
+
     protected override object CreateService(IServiceContainer container, Type serviceType)
     {
         if (serviceType == typeof(IVsDataSourceInformation))
@@ -30,5 +33,15 @@ class SqliteConnectionSupport : AdoDotNetConnectionSupport
         }
 
         return base.CreateService(container, serviceType);
+    }
+
+    public override string ConnectionString
+    {
+        get => _connectionString;
+        set
+        {
+            _connectionString = value;
+            base.ConnectionString = new SqliteConnectionStringBuilder(value) { Pooling = false }.ToString();
+        }
     }
 }
