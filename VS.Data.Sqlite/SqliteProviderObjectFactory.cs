@@ -38,6 +38,10 @@ class SqliteProviderObjectFactory : DataProviderObjectFactory, SSqliteProviderOb
         {
             return new SqliteConnectionUIControl();
         }
+        if (objType == typeof(IVsDataConnectionUITester))
+        {
+            return new SqliteConnectionUITester();
+        }
         if (objType == typeof(IVsDataConnectionProperties)
             || objType == typeof(IVsDataConnectionUIProperties))
         {

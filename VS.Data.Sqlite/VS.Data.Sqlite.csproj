@@ -63,6 +63,7 @@
     <Compile Include="SqliteConnectionUIControl.Designer.cs">
       <DependentUpon>SqliteConnectionUIControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="SqliteConnectionUITester.cs" />
     <Compile Include="SqliteMappedObjectConverter.cs" />
     <Compile Include="SqliteObjectIdentifierConverter.cs" />
     <Compile Include="SqliteObjectSelector.cs" />
