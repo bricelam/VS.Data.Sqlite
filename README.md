@@ -5,6 +5,8 @@ VisualStudio.Data.Sqlite
 
 A Data Designer Extensibility ([DDEX](https://docs.microsoft.com/previous-versions/visualstudio/visual-studio-2013/bb165128(v=vs.120))) provider for [Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite/).
 
+The latest preview release is available on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=bricelam.VSDataSqlite).
+
 CI builds are available on the [Open VSIX Gallery](https://www.vsixgallery.com/extension/0b471821-68a4-49dd-b175-e6daf4e5cebf). Install [this extension](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.VSIXGallery-nightlybuilds) to get automatic updates.
 
 What it's for
