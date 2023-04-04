@@ -16,11 +16,23 @@
       <Properties>
         <Property name="Name" isIdentifierPart="true" />
         <Property name="Sql" />
+        <Property name="Type" />
+        <Property name="NColumns" type="System.Int64" />
+        <Property name="WithoutRowid" type="System.Int64" />
+        <Property name="Strict" type="System.Int64" />
       </Properties>
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
           <Parameters method="SelectObjects">
             <Parameter value="Tables" />
+            <Parameter>
+              <Parameter value="NColumns">
+                <Parameter value="ncol" />
+              </Parameter>
+              <Parameter value="WithoutRowid">
+                <Parameter value="wr" />
+              </Parameter>
+            </Parameter>
           </Parameters>
         </Service>
         <Service type="IDSRefBuilder" implementationType="Microsoft.VisualStudio.Data.Framework.DSRefBuilder">
@@ -61,6 +73,8 @@
         <Property name="DefaultValue" type="System.Object" />
         <Property name="PrimaryKey" type="System.Int64" />
         <Property name="Hidden" type="System.Int64" />
+        <Property name="Collate" />
+        <Property name="AutoIncrement" type="System.Int32" />
       </Properties>
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
@@ -72,6 +86,12 @@
               </Parameter>
               <Parameter value="PrimaryKey">
                 <Parameter value="pk" />
+              </Parameter>
+              <Parameter value="Collate">
+                <Parameter value="collSeq" />
+              </Parameter>
+              <Parameter value="AutoIncrement">
+                <Parameter value="autoInc" />
               </Parameter>
             </Parameter>
           </Parameters>
@@ -103,11 +123,17 @@
       <Properties>
         <Property name="Name" isIdentifierPart="true" />
         <Property name="Sql" />
+        <Property name="NColumns" type="System.Int64" />
       </Properties>
       <Services>
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
           <Parameters method="SelectObjects">
             <Parameter value="Views" />
+            <Parameter>
+              <Parameter value="NColumns">
+                <Parameter value="ncol" />
+              </Parameter>
+            </Parameter>
           </Parameters>
         </Service>
         <Service type="IDSRefBuilder" implementationType="Microsoft.VisualStudio.Data.Framework.DSRefBuilder">

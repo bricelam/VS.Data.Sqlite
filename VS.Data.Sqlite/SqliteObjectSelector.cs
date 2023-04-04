@@ -8,6 +8,8 @@ using Microsoft.VisualStudio.Data.Services;
 using Microsoft.VisualStudio.Data.Services.SupportEntities;
 using Microsoft.VisualStudio.Data.Sqlite.Properties;
 
+using static SQLitePCL.raw;
+
 namespace Microsoft.VisualStudio.Data.Sqlite;
 
 class SqliteObjectSelector : AdoDotNetObjectSelector
@@ -75,10 +77,11 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
         var command = connection.CreateCommand();
         command.CommandText =
         @"
-            SELECT name, sql
-            FROM sqlite_master
-            WHERE type = 'table'
-                AND ($name IS NULL OR name = $name)
+            SELECT t.name, sql, l.type, ncol, wr, strict
+            FROM sqlite_master AS t
+            JOIN pragma_table_list(t.name) AS l
+            WHERE t.type = 'table'
+                AND ($name IS NULL OR t.name = $name)
         ";
         command.Parameters.AddWithValue("$name", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
 
@@ -117,22 +120,50 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
                 { "notnull", typeof(long) },
                 { "dflt_value" },
                 { "pk", typeof(long) },
-                { "hidden", typeof(long) }
+                { "hidden", typeof(long) },
+                { "collSeq" },
+                { "autoInc", typeof(int) }
             }
         };
         using (var reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
-                var values = new object[8];
-                reader.GetValues(values);
+                var table = reader.GetString(0);
+                var cid = reader.GetInt64(1);
+                var name = reader.GetString(2);
+                var type = reader.GetString(3);
+                var notnull = reader.GetInt64(4);
+                var dfltValue = reader.GetValue(5);
+                var pk = reader.GetInt64(6);
+                var hidden = reader.GetInt64(7);
 
-                // NB: Can't use Load because dflt_value is nullable without a declared type
-                dataTable.Rows.Add(values);
+                var rc = sqlite3_table_column_metadata(
+                    connection.Handle,
+                    connection.Database,
+                    table,
+                    name,
+                    out _,
+                    out var collSeq,
+                    out _,
+                    out _,
+                    out var autoInc);
+                SqliteException.ThrowExceptionForRC(rc, connection.Handle);
+
+                dataTable.Rows.Add(
+                    table,
+                    cid,
+                    name,
+                    type,
+                    notnull,
+                    dfltValue,
+                    pk,
+                    hidden,
+                    collSeq,
+                    autoInc);
             }
         }
 
-        // TODO: Get collSeq and autoinc via sqlite3_table_column_metadata
         return dataTable;
     }
 
@@ -166,10 +197,11 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
         var command = connection.CreateCommand();
         command.CommandText =
         @"
-            SELECT name, sql
-            FROM sqlite_master
-            WHERE type = 'view'
-                AND ($name IS NULL OR name = $name)
+            SELECT v.name, sql, ncol
+            FROM sqlite_master AS v
+            JOIN pragma_table_list(v.name) AS l
+            WHERE v.type = 'view'
+                AND ($name IS NULL OR v.name = $name)
         ";
         command.Parameters.AddWithValue("$name", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
 
