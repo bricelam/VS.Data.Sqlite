@@ -9,7 +9,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite;
 
 class SqliteConnectionSupport : AdoDotNetConnectionSupport
 {
-    private string _connectionString;
+    string _connectionString;
 
     protected override object CreateService(IServiceContainer container, Type serviceType)
     {
