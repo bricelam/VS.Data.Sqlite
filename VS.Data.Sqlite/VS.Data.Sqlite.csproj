@@ -73,6 +73,12 @@
     <Compile Include="SqliteSourceInformation.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Schemas\DataObjectSupport.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Schemas\DataViewSupport.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>

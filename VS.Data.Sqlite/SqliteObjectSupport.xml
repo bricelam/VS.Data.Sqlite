@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<DataObjectSupport xmlns="http://schemas.microsoft.com/VisualStudio/2007/07/Data/DataObjectSupport">
+<DataObjectSupport xmlns="http://schemas.microsoft.com/VisualStudio/2007/07/Data/DataObjectSupport"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://schemas.microsoft.com/VisualStudio/2007/07/Data/DataObjectSupport Schemas\DataObjectSupport.xsd">
   <Types>
     <RootType>
       <Properties>
@@ -66,14 +68,14 @@
       </Identifier>
       <Properties>
         <Property name="Table" isIdentifierPart="true" />
-        <Property name="CID" type="System.Int64" />
+        <Property name="Id" type="System.Int64" />
         <Property name="Name" isIdentifierPart="true" />
         <Property name="Type" />
         <Property name="NotNull" type="System.Int64" />
         <Property name="DefaultValue" type="System.Object" />
         <Property name="PrimaryKey" type="System.Int64" />
         <Property name="Hidden" type="System.Int64" />
-        <Property name="Collate" />
+        <Property name="Collation" />
         <Property name="AutoIncrement" type="System.Int32" />
       </Properties>
       <Services>
@@ -81,17 +83,87 @@
           <Parameters method="SelectObjects">
             <Parameter value="TableColumns" />
             <Parameter>
+              <Parameter value="Id">
+                <Parameter value="cid" />
+              </Parameter>
               <Parameter value="DefaultValue">
                 <Parameter value="dflt_value" />
               </Parameter>
               <Parameter value="PrimaryKey">
                 <Parameter value="pk" />
               </Parameter>
-              <Parameter value="Collate">
+              <Parameter value="Collation">
                 <Parameter value="collSeq" />
               </Parameter>
               <Parameter value="AutoIncrement">
                 <Parameter value="autoInc" />
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
+    <Type name="TableForeignKey">
+      <Identifier>
+        <Part name="Table" />
+        <Part name="Id" type="System.Int64" />
+      </Identifier>
+      <Properties>
+        <Property name="Table" isIdentifierPart="true" />
+        <Property name="Id" isIdentifierPart="true" />
+        <Property name="ToTable" />
+        <Property name="OnUpdate" />
+        <Property name="OnDelete" />
+        <Property name="Match" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="SelectObjects">
+            <Parameter value="TableForeignKeys" />
+            <Parameter>
+              <Parameter value="ToTable">
+                <Parameter value="to_table" />
+              </Parameter>
+              <Parameter value="OnUpdate">
+                <Parameter value="on_update" />
+              </Parameter>
+              <Parameter value="OnDelete">
+                <Parameter value="on_delete" />
+              </Parameter>
+            </Parameter>
+          </Parameters>
+        </Service>
+      </Services>
+    </Type>
+    <Type name="TableForeignKeyColumn">
+      <Identifier>
+        <Part name="Table" />
+        <Part name="ForeignKey" type="System.Int64" />
+        <Part name="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Table" isIdentifierPart="true" />
+        <Property name="ForeignKey" isIdentifierPart="true" />
+        <Property name="Ordinal" type="System.Int64" />
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="ToColumn" />
+      </Properties>
+      <Services>
+        <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
+          <Parameters method="SelectObjects">
+            <Parameter value="TableForeignKeyColumns" />
+            <Parameter>
+              <Parameter value="ForeignKey">
+                <Parameter value="fk" />
+              </Parameter>
+              <Parameter value="Ordinal">
+                <Parameter value="seq" />
+              </Parameter>
+              <Parameter value="Name">
+                <Parameter value="from" />
+              </Parameter>
+              <Parameter value="ToColumn">
+                <Parameter value="to" />
               </Parameter>
             </Parameter>
           </Parameters>
@@ -133,13 +205,11 @@
       <Properties>
         <Property name="Table" isIdentifierPart="true" />
         <Property name="Index" isIdentifierPart="true" />
-        <Property name="SeqNo" type="System.Int64" />
-        <Property name="CID" type="System.Int64" />
-        <!-- TODO: Use rowid for Name when CID is -1? -->
-        <!-- TODO: Use (expr) for Name when CID is -2? -->
+        <Property name="Ordinal" type="System.Int64" />
+        <Property name="Id" type="System.Int64" />
         <Property name="Name" isIdentifierPart="true" />
         <Property name="Descending" type="System.Int64" />
-        <Property name="Collate" />
+        <Property name="Collation" />
         <Property name="Key" type="System.Int64" />
       </Properties>
       <Services>
@@ -150,10 +220,16 @@
               <Parameter value="Table">
                 <Parameter value="tbl_name" />
               </Parameter>
+              <Parameter value="Ordinal">
+                <Parameter value="seqno" />
+              </Parameter>
+              <Parameter value="Id">
+                <Parameter value="cid" />
+              </Parameter>
               <Parameter value="Descending">
                 <Parameter value="desc" />
               </Parameter>
-              <Parameter value="Collate">
+              <Parameter value="Collation">
                 <Parameter value="collSeq" />
               </Parameter>
             </Parameter>
@@ -230,7 +306,7 @@
       </Identifier>
       <Properties>
         <Property name="View" isIdentifierPart="true" />
-        <Property name="CID" type="System.Int64" />
+        <Property name="Id" type="System.Int64" />
         <Property name="Name" isIdentifierPart="true" />
         <Property name="Type" />
       </Properties>
@@ -238,6 +314,11 @@
         <Service type="IVsDataObjectSelector" implementationType="Microsoft.VisualStudio.Data.Sqlite.SqliteObjectSelector">
           <Parameters method="SelectObjects">
             <Parameter value="ViewColumns" />
+            <Parameter>
+              <Parameter value="Id">
+                <Parameter value="cid" />
+              </Parameter>
+            </Parameter>
           </Parameters>
         </Service>
       </Services>
@@ -262,6 +343,7 @@
     </Type>
   </Types>
   <MappedTypes>
+    <!-- NB: Expression syntax documented at https://learn.microsoft.com/dotnet/api/system.data.datacolumn.expression#expression-syntax -->
     <MappedType name="Table" underlyingType="Table">
       <Selection restrictions="{Name}" ordering="Name" />
       <Identifier>
@@ -283,7 +365,7 @@
       </Properties>
     </MappedType>
     <MappedType name="TableColumn" underlyingType="TableColumn">
-      <Selection restrictions="{Table},{Name}" ordering="Table,CID" />
+      <Selection restrictions="{Table},{Name}" ordering="Table,Id" />
       <Identifier>
         <Part name="Catalog">
           <Conversion>
@@ -294,9 +376,10 @@
         <Part name="Name" underlyingMember="Name" />
       </Identifier>
       <Properties>
+        <!-- TODO: UserDataType, NativeDataType, Length, Precision, Scale? -->
         <Property name="Catalog" isIdentifierPart="true" />
         <Property name="Table" isIdentifierPart="true" />
-        <Property name="Ordinal" underlyingMember="CID">
+        <Property name="Ordinal" underlyingMember="Id">
           <Conversion>
             <ChangeType type="System.Int32" />
           </Conversion>
@@ -331,7 +414,70 @@
         </Property>
       </Properties>
     </MappedType>
+    <MappedType name="TableForeignKey" underlyingType="TableForeignKey">
+      <Selection restrictions="{Table},{Name}" ordering="Table,Id" />
+      <Identifier>
+        <Part name="Catalog">
+          <Conversion>
+            <Calculate expr="'main'" exprType="System.String" />
+          </Conversion>
+        </Part>
+        <Part name="Table" underlyingMember="Table" />
+        <Part name="Name" underlyingMember="Id">
+          <Conversion>
+            <ChangeType type="System.String" />
+          </Conversion>
+        </Part>
+      </Identifier>
+      <Properties>
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="ReferencedTableName" underlyingMember="ToTable" />
+        <!-- TODO: ReferencedUniqueKey? -->
+        <Property name="UpdateAction" underlyingMember="OnUpdate">
+          <Conversion>
+            <Calculate expr="IIF({0} = 'NO ACTION', 0,
+                             IIF({0} = 'CASCADE', 1,
+                             IIF({0} = 'SET NULL', 2,
+                             IIF({0} = 'SET DEFAULT', 3,
+                             IIF({0} = 'RESTRICT', 4, -1)))))"
+                       exprType="System.Int32"/>
+          </Conversion>
+        </Property>
+        <Property name="DeleteAction" underlyingMember="OnDelete">
+          <Conversion>
+            <Calculate expr="IIF({0} = 'NO ACTION', 0,
+                             IIF({0} = 'CASCADE', 1,
+                             IIF({0} = 'SET NULL', 2,
+                             IIF({0} = 'SET DEFAULT', 3,
+                             IIF({0} = 'RESTRICT', 4, -1)))))"
+                       exprType="System.Int32"/>
+          </Conversion>
+        </Property>
+      </Properties>
+    </MappedType>
+    <MappedType name="TableForeignKeyColumn" underlyingType="TableForeignKeyColumn">
+      <Selection restrictions="{Table},{TableForeignKey}" ordering="Table,ForeignKey,Ordinal" />
+      <Identifier>
+        <Part name="Catalog">
+          <Conversion>
+            <Calculate expr="'main'" exprType="System.String" />
+          </Conversion>
+        </Part>
+        <Part name="Table" underlyingMember="Table" />
+        <Part name="TableForeignKey" underlyingMember="ForeignKey">
+          <Conversion>
+            <ChangeType type="System.String" />
+          </Conversion>
+        </Part>
+        <Part name="Name" underlyingMember="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="ReferencedTableColumn" underlyingMember="ToColumn" />
+      </Properties>
+    </MappedType>
     <MappedType name="TableUniqueKey" underlyingType="TableIndex">
+      <!-- TODO: Filter out partial indexes? -->
       <Selection restrictions="{Table},{Name}" filter="Unique = 1" ordering="Table,Name" />
       <Identifier>
         <Part name="Catalog">
@@ -352,7 +498,7 @@
       </Properties>
     </MappedType>
     <MappedType name="TableUniqueKeyColumn" underlyingType="TableIndexColumn">
-      <Selection restrictions="{Table},{TableUniqueKey},{Name}" ordering="Table,Index,SeqNo" />
+      <Selection restrictions="{Table},{TableUniqueKey},{Name}" ordering="Table,Index,Ordinal" />
       <Identifier>
         <Part name="Catalog">
           <Conversion>
@@ -387,5 +533,6 @@
         </Property>
       </Properties>
     </MappedType>
+    <!-- TODO: ViewColumn -->
   </MappedTypes>
 </DataObjectSupport>

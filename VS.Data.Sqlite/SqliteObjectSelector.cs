@@ -19,6 +19,8 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
         {
             { "Tables",  SelectTables },
             { "TableColumns", SelectTableColumns },
+            { "TableForeignKeys", SelectTableForeignKeys },
+            { "TableForeignKeyColumns", SelectTableForeignKeyColumns },
             { "TableIndexes", SelectTableIndexes },
             { "TableIndexColumns", SelectTableIndexColumns },
             { "TableTriggers", SelectTableTriggers },
@@ -164,6 +166,58 @@ class SqliteObjectSelector : AdoDotNetObjectSelector
                     collSeq,
                     autoInc);
             }
+        }
+
+        return dataTable;
+    }
+
+    static DataTable SelectTableForeignKeys(SqliteConnection connection, object[] restrictions)
+    {
+        var command = connection.CreateCommand();
+        command.CommandText =
+        @"
+            SELECT DISTINCT name AS ""table"", id, ""table"" AS to_table, on_update, on_delete, match
+            FROM sqlite_master AS t
+            JOIN pragma_foreign_key_list(name) AS f
+            WHERE type = 'table'
+                AND ($table IS NULL OR name = $table)
+                AND ($id IS NULL OR id = $id)
+        ";
+        command.Parameters.AddWithValue("$table", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+        var idRestriction = restrictions.Length <= 1 ? null : restrictions[1];
+        command.Parameters.AddWithValue("$id", idRestriction is null ? DBNull.Value : Convert.ToInt64(idRestriction));
+
+        var dataTable = new DataTable();
+        using (var reader = command.ExecuteReader())
+        {
+            dataTable.Load(reader);
+        }
+
+        return dataTable;
+    }
+
+    static DataTable SelectTableForeignKeyColumns(SqliteConnection connection, object[] restrictions)
+    {
+        var command = connection.CreateCommand();
+        command.CommandText =
+        @"
+            SELECT name AS ""table"", id AS fk, seq, ""from"", ""to""
+            FROM sqlite_master AS t
+            JOIN pragma_foreign_key_list(name) AS c
+            WHERE type = 'table'
+                AND ($table IS NULL OR name = $table)
+                AND ($fk IS NULL OR id = $fk)
+                AND ($name IS NULL OR ""from"" = $name)
+        ";
+        command.Parameters.AddWithValue("$table", (restrictions.Length <= 0 ? null : restrictions[0]) ?? DBNull.Value);
+        var fkRestriction = restrictions.Length <= 1 ? null : restrictions[1];
+        command.Parameters.AddWithValue("$fk", fkRestriction is null ? DBNull.Value : Convert.ToInt64(fkRestriction));
+        command.Parameters.AddWithValue("$name", (restrictions.Length <= 2 ? null : restrictions[2]) ?? DBNull.Value);
+
+        var dataTable = new DataTable();
+        using (var reader = command.ExecuteReader())
+        {
+            dataTable.Load(reader);
         }
 
         return dataTable;

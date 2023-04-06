@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualStudio.Data.Services;
 using Microsoft.VisualStudio.Data.Services.RelationalObjectModel;
@@ -82,7 +81,23 @@ public class MappedObjectTests
                         Assert.Equal("column5", c.Name);
                         Assert.True(c.IsComputed);
                     });
-                Assert.Throws<NotSupportedException>(() => t.ForeignKeys);
+                Assert.Collection(
+                    t.ForeignKeys,
+                    k =>
+                    {
+                        // fk1
+                        Assert.Equal("0", k.Name);
+                        Assert.Equal("table2", k.ReferencedTable.Name);
+                        Assert.Equal(1, k.UpdateAction);
+                        Assert.Equal(1, k.DeleteAction);
+                        Assert.Collection(
+                            k.Columns,
+                            c =>
+                            {
+                                Assert.Equal("column3", c.Name);
+                                Assert.Equal("id", c.ReferencedColumn.Name);
+                            });
+                    });
                 Assert.Collection(
                     t.UniqueKeys,
                     k =>
