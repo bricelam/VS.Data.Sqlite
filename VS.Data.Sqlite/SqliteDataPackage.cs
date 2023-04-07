@@ -7,8 +7,9 @@ using Task = System.Threading.Tasks.Task;
 namespace Microsoft.VisualStudio.Data.Sqlite;
 
 [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-[Guid("0feac8da-2a45-4623-8179-2e5b82928098")]
+[Guid(PackageGuids.SqliteDataString)]
 [ProvideService(typeof(SSqliteProviderObjectFactory), IsAsyncQueryable = true)]
+[ProvideMenuResource("Menus.ctmenu", 1)]
 public sealed class SqliteDataPackage : AsyncPackage
 {
     protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)

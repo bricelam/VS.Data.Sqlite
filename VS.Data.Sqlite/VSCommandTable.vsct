@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="vsshlids.h"/>
+
+  <Commands package="SqliteData">
+    <Buttons>
+      <Button guid="SqliteData" id="ShowSqlCommand" priority="0x0100" type="Button">
+        <Parent guid="guidVSData" id="IDG_DV_OBJECT_NODE" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <Strings>
+          <ButtonText>Show SQL</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="SqliteData" value="{0feac8da-2a45-4623-8179-2e5b82928098}">
+      <IDSymbol name="ShowSqlCommand" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

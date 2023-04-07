@@ -71,6 +71,12 @@
     <Compile Include="SqliteDataPackage.cs" />
     <Compile Include="SqliteRootObjectSelector.cs" />
     <Compile Include="SqliteSourceInformation.cs" />
+    <Compile Include="SqliteViewCommandProvider.cs" />
+    <Compile Include="VSCommandTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VSCommandTable.vsct</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Schemas\DataObjectSupport.xsd">
@@ -129,6 +135,11 @@
       <Link>Resources\LICENSE.md</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <VSCTCompile Include="VSCommandTable.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <Generator>VsctGenerator</Generator>
+      <LastGenOutput>VSCommandTable.cs</LastGenOutput>
+    </VSCTCompile>
     <EmbeddedResource Include="SqliteConnectionUIControl.resx">
       <DependentUpon>SqliteConnectionUIControl.cs</DependentUpon>
     </EmbeddedResource>

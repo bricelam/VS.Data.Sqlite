@@ -2,6 +2,12 @@
 <DataViewSupport xmlns="http://schemas.microsoft.com/VisualStudio/2007/07/Data/DataViewSupport"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://schemas.microsoft.com/VisualStudio/2007/07/Data/DataViewSupport Schemas\DataViewSupport.xsd">
+  <Define name="ShowSqlCommand">
+    <Command guid="0feac8da-2a45-4623-8179-2e5b82928098" cmdid="0x0100" provider="Microsoft.VisualStudio.Data.Sqlite.SqliteViewCommandProvider" />
+  </Define>
+  <Define name="RetrieveDataCommand">
+    <Command guid="501822E1-B5AF-11d0-B4DC-00A0C91506EF" cmdid="0x3060" provider="884DD964-5327-461f-9F06-6484DD540F8F" />
+  </Define>
   <Views>
     <View name="SQLite">
       <ConnectionNode>
@@ -20,10 +26,9 @@
                     <Property name="WithoutRowid" />
                     <Property name="Strict" />
                   </Properties>
-                  <!-- TODO: Command to show Sql? -->
                   <Commands>
-                    <!-- Retrieve Data -->
-                    <Command guid="501822E1-B5AF-11d0-B4DC-00A0C91506EF" cmdid="0x3060" provider="884DD964-5327-461f-9F06-6484DD540F8F" />
+                    <CommandRef name="ShowSqlCommand" />
+                    <CommandRef name="RetrieveDataCommand" />
                   </Commands>
                   <Children>
                     <StaticNode>
@@ -102,7 +107,9 @@
                               <Property name="Origin" />
                               <Property name="Partial" />
                             </Properties>
-                            <!-- TODO: Command to show Sql? -->
+                            <Commands>
+                              <CommandRef name="ShowSqlCommand" />
+                            </Commands>
                             <!-- TODO: Denormalize to optimize for single-column indexes? -->
                             <Children>
                               <Selection type="TableIndexColumn" restrictions="{index.Table},{index.Name}" ordering="Ordinal">
@@ -137,7 +144,9 @@
                               <Property name="Table" />
                               <Property name="Name" />
                             </Properties>
-                            <!-- TODO: Command to show Sql? -->
+                            <Commands>
+                              <CommandRef name="ShowSqlCommand" />
+                            </Commands>
                           </SelectionNode>
                         </Selection>
                       </Children>
@@ -157,10 +166,9 @@
                     <Property name="Name" />
                     <Property name="NColumns" />
                   </Properties>
-                  <!-- TODO: Command to show Sql? -->
                   <Commands>
-                    <!-- Retrieve Data -->
-                    <Command guid="501822E1-B5AF-11d0-B4DC-00A0C91506EF" cmdid="0x3060" provider="884DD964-5327-461f-9F06-6484DD540F8F" />
+                    <CommandRef name="ShowSqlCommand" />
+                    <CommandRef name="RetrieveDataCommand" />
                   </Commands>
                   <Children>
                     <StaticNode>
@@ -189,7 +197,9 @@
                               <Property name="View" />
                               <Property name="Name" />
                             </Properties>
-                            <!-- TODO: Command to show Sql? -->
+                            <Commands>
+                              <CommandRef name="ShowSqlCommand" />
+                            </Commands>
                           </SelectionNode>
                         </Selection>
                       </Children>
