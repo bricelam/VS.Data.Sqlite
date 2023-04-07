@@ -167,8 +167,12 @@ public class MappedObjectTests
 
         var command = (IVsDataCommand)connection.GetService(typeof(IVsDataCommand));
         command.ExecuteWithoutResults(@"
+            CREATE TABLE table1 (
+                column1 INTEGER
+            );
+
             CREATE VIEW view1 AS
-            SELECT 1 AS Value;
+            SELECT * FROM table1;
         ");
 
         var selector = (IVsDataMappedObjectSelector)connection.GetService(typeof(IVsDataMappedObjectSelector));
@@ -182,6 +186,17 @@ public class MappedObjectTests
                 Assert.Null(v.Schema);
                 Assert.Equal("view1", v.Name);
                 Assert.Equal(new object[] { "main", null, "view1" }, v.Identifier);
+                Assert.Collection(
+                    v.Columns,
+                    c =>
+                    {
+                        Assert.Equal("column1", c.Name);
+                        Assert.Equal(0, c.Ordinal);
+                        Assert.Equal("INTEGER", c.NativeDataType);
+                        Assert.Equal((int)SqliteType.Integer, c.AdoDotNetDataType);
+                        Assert.Equal((int)DbType.Int64, c.AdoDotNetDbType);
+                        Assert.Equal(typeof(long), c.FrameworkDataType);
+                    });
             });
     }
 }

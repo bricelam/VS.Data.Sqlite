@@ -376,7 +376,6 @@
         <Part name="Name" underlyingMember="Name" />
       </Identifier>
       <Properties>
-        <!-- TODO: UserDataType, NativeDataType, Length, Precision, Scale? -->
         <Property name="Catalog" isIdentifierPart="true" />
         <Property name="Table" isIdentifierPart="true" />
         <Property name="Ordinal" underlyingMember="Id">
@@ -533,6 +532,43 @@
         </Property>
       </Properties>
     </MappedType>
-    <!-- TODO: ViewColumn -->
+    <MappedType name="ViewColumn" underlyingType="ViewColumn">
+      <Selection restrictions="{View},{Name}" ordering="View,Id" />
+      <Identifier>
+        <Part name="Catalog">
+          <Conversion>
+            <Calculate expr="'main'" exprType="System.String" />
+          </Conversion>
+        </Part>
+        <Part name="View" underlyingMember="View" />
+        <Part name="Name" underlyingMember="Name" />
+      </Identifier>
+      <Properties>
+        <Property name="Catalog" isIdentifierPart="true" />
+        <Property name="View" isIdentifierPart="true" />
+        <Property name="Ordinal" underlyingMember="Id">
+          <Conversion>
+            <ChangeType type="System.Int32" />
+          </Conversion>
+        </Property>
+        <Property name="Name" isIdentifierPart="true" />
+        <Property name="NativeDataType" underlyingMember="Type" />
+        <Property name="AdoDotNetDataType" underlyingMember="Type">
+          <Conversion>
+            <CallMapper />
+          </Conversion>
+        </Property>
+        <Property name="AdoDotNetDbType" underlyingMember="Type">
+          <Conversion>
+            <CallMapper />
+          </Conversion>
+        </Property>
+        <Property name="FrameworkDataType" underlyingMember="Type">
+          <Conversion>
+            <CallMapper />
+          </Conversion>
+        </Property>
+      </Properties>
+    </MappedType>
   </MappedTypes>
 </DataObjectSupport>
