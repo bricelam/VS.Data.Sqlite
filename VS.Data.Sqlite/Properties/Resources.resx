@@ -118,7 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DataProvider_Description" xml:space="preserve">
-    <value>Use this selection to connect to a SQLite database file through the Microsoft.Data.Sqlite Provider.</value>
+    <value>Use this selection to connect to a SQLite database file through the Microsoft.Data.Sqlite Provider.
+
+For more advanced scenarios you can use &lt;a href="https://marketplace.visualstudio.com/items?itemName=ErikEJ.SQLServerCompactSQLiteToolbox"&gt;SQLite Toolbox&lt;/a&gt;.</value>
   </data>
   <data name="DataProvider_DisplayName" xml:space="preserve">
     <value>Microsoft.Data.Sqlite Provider</value>
@@ -127,7 +129,9 @@
     <value>Microsoft.Data.Sqlite</value>
   </data>
   <data name="DataSource_Description" xml:space="preserve">
-    <value>Use this selection to connect to a SQLite database file through the Microsoft.Data.Sqlite Provider.</value>
+    <value>Use this selection to connect to a SQLite database file through the Microsoft.Data.Sqlite Provider.
+
+For more advanced scenarios you can use &lt;a href="https://marketplace.visualstudio.com/items?itemName=ErikEJ.SQLServerCompactSQLiteToolbox"&gt;SQLite Toolbox&lt;/a&gt;.</value>
   </data>
   <data name="DataSource_DisplayName" xml:space="preserve">
     <value>SQLite</value>
