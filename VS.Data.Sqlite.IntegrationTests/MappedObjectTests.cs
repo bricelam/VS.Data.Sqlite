@@ -10,7 +10,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite;
 
 public class MappedObjectTests
 {
-    [VsFact]
+    [IdeFact]
     public void Can_select_tables()
     {
         var connectionFactory = (IVsDataConnectionFactory)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataConnectionFactory));
@@ -133,7 +133,7 @@ public class MappedObjectTests
             });
     }
 
-    [VsFact]
+    [IdeFact]
     public void Can_select_tables_with_restrictions()
     {
         var connectionFactory = (IVsDataConnectionFactory)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataConnectionFactory));
@@ -156,7 +156,7 @@ public class MappedObjectTests
             t => Assert.Equal("A", t.Name));
     }
 
-    [VsFact]
+    [IdeFact]
     public void Can_select_views()
     {
         var connectionFactory = (IVsDataConnectionFactory)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataConnectionFactory));

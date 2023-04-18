@@ -8,7 +8,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite;
 
 public class ProviderTests
 {
-    [VsFact]
+    [IdeFact]
     public void Is_registered()
     {
         var providerManager = (IVsDataProviderManager)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataProviderManager));

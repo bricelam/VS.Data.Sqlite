@@ -14,12 +14,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="VsixTesting.Xunit" Version="0.1.75" />
+    <PackageReference Include="Microsoft.VisualStudio.Extensibility.Testing.Xunit" Version="0.1.169-beta" />
     <PackageReference Include="FlaUI.UIA2" Version="4.0.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\VS.Data.Sqlite\VS.Data.Sqlite.csproj" />
+    <AssemblyAttribute Include="Xunit.Harness.RequireExtension">
+      <_Parameter1>..\..\..\..\..\VS.Data.Sqlite\bin\$(Configuration)\VisualStudio.Data.Sqlite.vsix</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
 </Project>

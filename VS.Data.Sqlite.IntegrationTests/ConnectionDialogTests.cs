@@ -13,7 +13,7 @@ namespace Microsoft.VisualStudio.Data.Sqlite;
 
 public class ConnectionDialogTests
 {
-    [VsFact(UIThread = true)]
+    [IdeFact]
     public void Works()
     {
         var dialogFactory = (IVsDataConnectionDialogFactory)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataConnectionDialogFactory));
