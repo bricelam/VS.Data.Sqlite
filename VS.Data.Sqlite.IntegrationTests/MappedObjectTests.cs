@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Microsoft.VisualStudio.Data.Sqlite;
 
+[Collection("IdeCollection")]
 public class MappedObjectTests
 {
     [IdeFact]

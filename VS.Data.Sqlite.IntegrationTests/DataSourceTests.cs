@@ -5,6 +5,7 @@ using Xunit;
 
 namespace Microsoft.VisualStudio.Data.Sqlite;
 
+[Collection("IdeCollection")]
 public class DataSourceTests
 {
     [IdeFact]

@@ -21,9 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VS.Data.Sqlite\VS.Data.Sqlite.csproj" />
-    <AssemblyAttribute Include="Xunit.Harness.RequireExtension">
-      <_Parameter1>..\..\..\..\..\VS.Data.Sqlite\bin\$(Configuration)\VisualStudio.Data.Sqlite.vsix</_Parameter1>
-    </AssemblyAttribute>
   </ItemGroup>
 
 </Project>
