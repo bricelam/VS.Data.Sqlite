@@ -1,7 +1,7 @@
 VisualStudio.Data.Sqlite
 ========================
 
-![build status](https://img.shields.io/github/actions/workflow/status/bricelam/VS.Data.Sqlite/dotnet.yml?main)
+![build status](https://img.shields.io/github/actions/workflow/status/bricelam/VS.Data.Sqlite/dotnet.yml?main) ![latest version](https://img.shields.io/visual-studio-marketplace/v/bricelam.VSDataSqlite) ![downloads](https://img.shields.io/visual-studio-marketplace/d/bricelam.VSDataSqlite) ![license](https://img.shields.io/badge/license-MS--RL-important)
 
 A Data Designer Extensibility ([DDEX](https://docs.microsoft.com/previous-versions/visualstudio/visual-studio-2013/bb165128(v=vs.120))) provider for [Microsoft.Data.Sqlite](https://docs.microsoft.com/dotnet/standard/data/sqlite/).
 
