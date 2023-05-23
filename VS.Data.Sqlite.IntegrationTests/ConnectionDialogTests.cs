@@ -11,9 +11,10 @@ using Xunit;
 
 namespace Microsoft.VisualStudio.Data.Sqlite;
 
+[Collection("IdeCollection")]
 public class ConnectionDialogTests
 {
-    [VsFact(UIThread = true)]
+    [IdeFact]
     public void Works()
     {
         var dialogFactory = (IVsDataConnectionDialogFactory)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataConnectionDialogFactory));

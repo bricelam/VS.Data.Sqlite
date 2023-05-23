@@ -14,8 +14,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="VsixTesting.Xunit" Version="0.1.75" />
+    <PackageReference Include="Microsoft.VisualStudio.Extensibility.Testing.Xunit" Version="0.1.169-beta" />
     <PackageReference Include="FlaUI.UIA2" Version="4.0.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

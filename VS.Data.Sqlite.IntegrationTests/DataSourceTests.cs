@@ -5,9 +5,10 @@ using Xunit;
 
 namespace Microsoft.VisualStudio.Data.Sqlite;
 
+[Collection("IdeCollection")]
 public class DataSourceTests
 {
-    [VsFact]
+    [IdeFact]
     public void Is_registered()
     {
         var dataSourceManager = (IVsDataSourceManager)ServiceProvider.GlobalProvider.GetService(typeof(IVsDataSourceManager));
