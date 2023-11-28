@@ -23,12 +23,11 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         path: 'VS.Data.Sqlite\\bin\\*\\VisualStudio.Data.Sqlite.vsix'
-    # UNDONE: Blocked on josetr/VsixTesting#37
-    #- name: Test
-    #  uses: microsoft/vstest-action@main
-    #  with:
-    #    testAssembly: '**\\VisualStudio.Data.Sqlite.IntegrationTests.dll'
-    #    searchFolder: 'VS.Data.Sqlite.IntegrationTests\\bin\\'
+    - name: Test
+      uses: microsoft/vstest-action@main
+      with:
+        testAssembly: '**\\VisualStudio.Data.Sqlite.IntegrationTests.dll'
+        searchFolder: 'VS.Data.Sqlite.IntegrationTests\\bin\\'
     - name: Publish
       if: ${{ github.repository_owner == 'bricelam' && github.event_name == 'push' }}
       env:
