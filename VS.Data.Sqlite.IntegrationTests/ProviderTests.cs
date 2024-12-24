@@ -21,6 +21,5 @@ public class ProviderTests
         Assert.Equal("Microsoft.Data.Sqlite", provider.GetProperty("InvariantName"));
         Assert.Equal(Resources.DataProvider_ShortDisplayName, provider.ShortDisplayName);
         Assert.Equal(new Guid("77AB9A9D-78B9-4BA7-91AC-873F5338F1D2"), provider.Technology);
-        Assert.True(false);
     }
 }
