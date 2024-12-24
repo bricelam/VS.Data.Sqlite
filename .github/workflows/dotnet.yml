@@ -24,7 +24,7 @@ jobs:
         with:
           path: 'VS.Data.Sqlite\\bin\\*\\VisualStudio.Data.Sqlite.vsix'
       - name: Test
-        run: '& "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" **\bin\**\*test.dll **\bin\**\*tests.dll /logger:trx'
+        run: '& "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" **\bin\**\*test.dll **\bin\**\*tests.dll'
       - name: Publish
         if: ${{ github.repository_owner == 'bricelam' && github.event_name == 'push' }}
         env:
