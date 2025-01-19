@@ -61,7 +61,9 @@ namespace Microsoft.VisualStudio.Data.Sqlite.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use this selection to connect to a SQLite database file through the Microsoft.Data.Sqlite Provider..
+        ///   Looks up a localized string similar to Use this selection to connect to a SQLite database file through the Microsoft.Data.Sqlite Provider.
+        ///
+        ///For more advanced scenarios you can use &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=ErikEJ.SQLServerCompactSQLiteToolbox&quot;&gt;SQLite Toolbox&lt;/a&gt;..
         /// </summary>
         internal static string DataProvider_Description {
             get {
@@ -88,7 +90,9 @@ namespace Microsoft.VisualStudio.Data.Sqlite.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use this selection to connect to a SQLite database file through the Microsoft.Data.Sqlite Provider..
+        ///   Looks up a localized string similar to Use this selection to connect to a SQLite database file through the Microsoft.Data.Sqlite Provider.
+        ///
+        ///For more advanced scenarios you can use &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=ErikEJ.SQLServerCompactSQLiteToolbox&quot;&gt;SQLite Toolbox&lt;/a&gt;..
         /// </summary>
         internal static string DataSource_Description {
             get {
