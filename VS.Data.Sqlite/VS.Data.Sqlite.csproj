@@ -172,7 +172,10 @@
     </Content>
     <Content Update="$(PkgSQLitePCLRaw_lib_e_sqlite3)\runtimes\win-x64\native\e_sqlite3.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <VSIXSubPath>.</VSIXSubPath>
+    </Content>
+    <Content Include="$(PkgSQLitePCLRaw_lib_e_sqlite3)\runtimes\win-arm64\native\e_sqlite3.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <VSIXSubPath>runtimes\win-arm64\native</VSIXSubPath>
     </Content>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
