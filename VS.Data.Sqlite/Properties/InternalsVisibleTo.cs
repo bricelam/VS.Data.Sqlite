@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("VisualStudio.Data.Sqlite.IntegrationTests")]
+[assembly: InternalsVisibleTo("VS.Data.Sqlite.IntegrationTests")]

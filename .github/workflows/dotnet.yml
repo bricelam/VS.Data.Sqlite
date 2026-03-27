@@ -22,7 +22,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          path: 'VS.Data.Sqlite\\bin\\*\\VisualStudio.Data.Sqlite.vsix'
+          path: 'VS.Data.Sqlite\\bin\\*\\VS.Data.Sqlite.vsix'
       - name: Test
         run: '& "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" **\bin\**\*test.dll **\bin\**\*tests.dll'
       - name: Publish
@@ -33,4 +33,4 @@ jobs:
           APPVEYOR_REPO_BRANCH: ${{ github.ref_name }}
         run: |
           (New-Object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
-          Vsix-PublishToGallery VS.Data.Sqlite\bin\Release\VisualStudio.Data.Sqlite.vsix
+          Vsix-PublishToGallery VS.Data.Sqlite\bin\Release\VS.Data.Sqlite.vsix
