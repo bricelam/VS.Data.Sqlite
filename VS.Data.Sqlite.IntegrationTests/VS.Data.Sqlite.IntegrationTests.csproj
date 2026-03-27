@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net481</TargetFramework>
-    <AssemblyName>VisualStudio.Data.Sqlite.IntegrationTests</AssemblyName>
+    <AssemblyName>VS.Data.Sqlite.IntegrationTests</AssemblyName>
     <RootNamespace>Microsoft.VisualStudio.Data.Sqlite</RootNamespace>
     <UseCurrentRuntimeIdentifier>True</UseCurrentRuntimeIdentifier>
     <LangVersion>latest</LangVersion>

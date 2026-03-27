@@ -1,4 +1,4 @@
-VisualStudio.Data.Sqlite
+VS.Data.Sqlite
 ========================
 
 ![build status](https://img.shields.io/github/actions/workflow/status/bricelam/VS.Data.Sqlite/dotnet.yml?main) ![latest version](https://img.shields.io/visual-studio-marketplace/v/bricelam.VSDataSqlite) ![downloads](https://img.shields.io/visual-studio-marketplace/d/bricelam.VSDataSqlite) ![license](https://img.shields.io/badge/license-MS--RL-important)
